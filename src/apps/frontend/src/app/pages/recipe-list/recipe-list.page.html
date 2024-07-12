@@ -1,5 +1,9 @@
+@if (isLoading()) {
+<app-loading></app-loading>
+} @else {
 <section id="recipes">
-  @for (recipe of recipes; track $index) {
+  @for (recipe of recipes(); track $index) {
   <app-recipe [name]="recipe.name" [image]="recipe.image"></app-recipe>
   }
 </section>
+}

@@ -1,23 +1,30 @@
-import { Component } from "@angular/core";
+import { Component, computed, inject, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
+import { RecipeActions } from "../../states/recipe/recipe.action";
+import { selectRecipes, selectStatus } from "../../states/recipe/recipe.reducer";
 
 @Component({
   selector: "app-recipe-list",
   standalone: true,
-  imports: [RecipeComponent],
+  imports: [RecipeComponent, LoadingComponent],
   templateUrl: "./recipe-list.page.html",
   styleUrl: "./recipe-list.page.scss",
 })
-export class RecipeListPage {
-  recipes: { name: string; image: string }[] = [
-    {
-      name: "Spaghetti Bolognese",
-      image:
-        "https://www.sprinklesandsprouts.com/wp-content/uploads/2019/04/Authentic-Spaghetti-Bolognese-SQ.jpg",
-    },
-    {
-      name: "Spaghetti Carbonara",
-      image: "https://www.gutekueche.at/storage/media/recipe/101380/2127_Spaghetti-Carbonara-1.jpg",
-    },
-  ];
+export class RecipeListPage implements OnInit {
+  store = inject(Store);
+
+  recipeStatus = this.store.selectSignal(selectStatus);
+  recipes = this.store.selectSignal(selectRecipes);
+
+  isLoading = computed(() => {
+    const statuses = [this.recipeStatus()];
+
+    return statuses.some((status) => status === "LOADING");
+  });
+
+  ngOnInit(): void {
+    this.store.dispatch(RecipeActions.fetchAll());
+  }
 }
