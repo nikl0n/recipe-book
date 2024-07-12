@@ -1,0 +1,14 @@
+<mat-card class="recipe" appearance="outlined">
+  <img mat-card-image [src]="image()" />
+
+  <span>{{ name() }}</span>
+
+  <mat-card-actions>
+    <button mat-icon-button>
+      <mat-icon>print</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
