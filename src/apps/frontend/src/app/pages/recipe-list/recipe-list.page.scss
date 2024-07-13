@@ -1,8 +1,19 @@
+#filter {
+  display: flex;
+  justify-content: center;
+
+  mat-chip-listbox {
+    display: flex;
+  }
+
+  padding: 10px;
+}
+
 #recipes {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
 
-  padding: 10px;
+  padding: 10px 50px 10px 50px;
 }
