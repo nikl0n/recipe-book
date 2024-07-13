@@ -24,6 +24,10 @@ export class CourseApi {
       },
       {
         id: 3,
+        name: "Beilage",
+      },
+      {
+        id: 4,
         name: "Snack",
       },
     ];
