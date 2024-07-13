@@ -1,7 +1,8 @@
 <mat-card class="recipe" appearance="outlined">
-  <img mat-card-image [src]="image()" />
+  <img mat-card-image [src]="recipe().image" />
 
-  <span>{{ name() }}</span>
+  <span class="headline">{{ recipe().name }}</span>
+  <small>{{ course().name }}</small>
 
   <mat-card-actions>
     <button mat-icon-button>

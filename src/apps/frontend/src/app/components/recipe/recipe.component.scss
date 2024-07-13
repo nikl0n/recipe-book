@@ -7,8 +7,13 @@
     height: 250px;
   }
 
-  span {
+  span.headline {
     font-size: 20px;
     padding: 10px 10px 0 10px;
+  }
+  small {
+    padding: 0 10px 0 10px;
+    font-size: 12px;
+    color: grey;
   }
 }
