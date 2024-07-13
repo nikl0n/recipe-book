@@ -46,9 +46,8 @@ export const recipeFeature = createFeature({
 export const {
   name,
   reducer,
-  selectRecipes,
-  selectStatus,
-  selectStatusAction,
-  selectRecipeState,
-  selectRecipeById,
+  selectRecipes: RecipeSelectRecipes,
+  selectStatus: RecipeSelectStatus,
+  selectStatusAction: RecipeSelectStatusAction,
+  selectRecipeById: RecipeSelectRecipeById,
 } = recipeFeature;
