@@ -32,7 +32,7 @@ export const courseFeature = createFeature({
     on(CourseActions.fetchAllFailure, (state) => ({
       ...state,
       status: "ERROR" as const,
-      recipes: [],
+      courses: [],
     }))
   ),
   extraSelectors: ({ selectCourses }) => {
@@ -46,9 +46,8 @@ export const courseFeature = createFeature({
 export const {
   name,
   reducer,
-  selectCourses,
-  selectStatus,
-  selectStatusAction,
-  selectCourseState,
-  selectCourseById,
+  selectCourses: CourseSelectCourses,
+  selectStatus: CourseSelectStatus,
+  selectStatusAction: CourseSelectStatusAction,
+  selectCourseById: CourseSelectCourseById,
 } = courseFeature;
