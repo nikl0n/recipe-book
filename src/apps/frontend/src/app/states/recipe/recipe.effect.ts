@@ -16,9 +16,21 @@ export class RecipeEffect {
     this.actions$.pipe(
       ofType(RecipeActions.fetchAll),
       switchMap(() =>
-        this.recipeApi.fetchAllRecipes().pipe(
+        this.recipeApi.fetchAll().pipe(
           map((recipes) => RecipeActions.fetchAllSuccess({ recipes })),
           catchError((error: HttpErrorResponse) => of(RecipeActions.fetchAllFailure({ error })))
+        )
+      )
+    )
+  );
+
+  fetchById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecipeActions.fetchById),
+      switchMap(({ recipeId }) =>
+        this.recipeApi.fetchById(recipeId).pipe(
+          map((recipe) => RecipeActions.fetchByIdSuccess({ recipe })),
+          catchError((error: HttpErrorResponse) => of(RecipeActions.fetchByIdFailure({ error })))
         )
       )
     )

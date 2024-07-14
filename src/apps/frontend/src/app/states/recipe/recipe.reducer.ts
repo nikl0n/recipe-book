@@ -19,7 +19,7 @@ export const recipeFeature = createFeature({
   name: "recipe",
   reducer: createReducer(
     initialState,
-    on(RecipeActions.fetchAll, (state) => ({
+    on(RecipeActions.fetchAll, RecipeActions.fetchById, (state) => ({
       ...state,
       status: "LOADING" as const,
       statusAction: "READ" as const,
@@ -29,7 +29,23 @@ export const recipeFeature = createFeature({
       status: "SUCCESS" as const,
       recipes,
     })),
-    on(RecipeActions.fetchAllFailure, (state) => ({
+    on(RecipeActions.fetchByIdSuccess, (state, { recipe }) => {
+      let recipes = [...state.recipes];
+
+      const oldRecipeIndex = recipes.findIndex((oldRecipe) => oldRecipe.id === recipe.id);
+      if (oldRecipeIndex === -1) {
+        recipes = [...recipes, recipe];
+      } else {
+        recipes[oldRecipeIndex] = recipe;
+      }
+
+      return {
+        ...state,
+        status: "SUCCESS" as const,
+        recipes,
+      };
+    }),
+    on(RecipeActions.fetchAllFailure, RecipeActions.fetchByIdFailure, (state) => ({
       ...state,
       status: "ERROR" as const,
       recipes: [],

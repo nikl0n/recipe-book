@@ -9,5 +9,9 @@ export const CourseActions = createActionGroup({
     fetchAll: emptyProps(),
     fetchAllSuccess: props<{ courses: Course[] }>(),
     fetchAllFailure: props<{ error: HttpErrorResponse }>(),
+
+    fetchById: props<{ courseId: number }>(),
+    fetchByIdSuccess: props<{ course: Course }>(),
+    fetchByIdFailure: props<{ error: HttpErrorResponse }>(),
   },
 });

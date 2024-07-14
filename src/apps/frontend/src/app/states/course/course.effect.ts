@@ -16,9 +16,21 @@ export class CourseEffect {
     this.actions$.pipe(
       ofType(CourseActions.fetchAll),
       switchMap(() =>
-        this.courseApi.fetchAllCourses().pipe(
+        this.courseApi.fetchAll().pipe(
           map((courses) => CourseActions.fetchAllSuccess({ courses })),
           catchError((error: HttpErrorResponse) => of(CourseActions.fetchAllFailure({ error })))
+        )
+      )
+    )
+  );
+
+  fetchById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CourseActions.fetchById),
+      switchMap(({ courseId }) =>
+        this.courseApi.fetchById(courseId).pipe(
+          map((course) => CourseActions.fetchByIdSuccess({ course })),
+          catchError((error: HttpErrorResponse) => of(CourseActions.fetchByIdFailure({ error })))
         )
       )
     )

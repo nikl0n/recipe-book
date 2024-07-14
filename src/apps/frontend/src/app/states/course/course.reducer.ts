@@ -19,7 +19,7 @@ export const courseFeature = createFeature({
   name: "course",
   reducer: createReducer(
     initialState,
-    on(CourseActions.fetchAll, (state) => ({
+    on(CourseActions.fetchAll, CourseActions.fetchById, (state) => ({
       ...state,
       status: "LOADING" as const,
       statusAction: "READ" as const,
@@ -29,7 +29,23 @@ export const courseFeature = createFeature({
       status: "SUCCESS" as const,
       courses,
     })),
-    on(CourseActions.fetchAllFailure, (state) => ({
+    on(CourseActions.fetchByIdSuccess, (state, { course }) => {
+      let courses = [...state.courses];
+
+      const oldCourseIndex = courses.findIndex((oldCourse) => oldCourse.id === course.id);
+      if (oldCourseIndex === -1) {
+        courses = [...courses, course];
+      } else {
+        courses[oldCourseIndex] = course;
+      }
+
+      return {
+        ...state,
+        status: "SUCCESS" as const,
+        courses,
+      };
+    }),
+    on(CourseActions.fetchAllFailure, CourseActions.fetchByIdFailure, (state) => ({
       ...state,
       status: "ERROR" as const,
       courses: [],
