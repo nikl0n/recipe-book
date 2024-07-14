@@ -1,4 +1,4 @@
-<mat-card class="recipe" appearance="outlined">
+<mat-card class="recipe" appearance="outlined" (click)="onClickRecipe()">
   <img mat-card-image [src]="recipe().image" />
 
   <span class="headline">{{ recipe().name }}</span>
