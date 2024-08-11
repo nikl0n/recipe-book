@@ -132,6 +132,20 @@ export class RecipeApi {
         "https://www.cuisini-blog.de/wp-content/uploads/2023/06/einfacher-nudelauflauf-mit-schinken-und-kaese-1.jpg",
       courseId: 1,
     },
+    {
+      id: 17,
+      name: "Asiatischer Gurkensalat",
+      image:
+        "https://cdn.asiastreetfood.com/uploads/Korean-Barbecue-Banchan-Gurke-Rezept-2.jpg?strip=all&lossy=1&quality=80&ssl=1",
+      courseId: 3,
+    },
+    {
+      id: 18,
+      name: "Klassischer Gurkensalat",
+      image:
+        "https://flammenpapst.de/cdn/shop/articles/20230719203822-adobestock_53692138-1024x683.jpg?v=1689799580",
+      courseId: 3,
+    },
   ];
 
   fetchAll() {
