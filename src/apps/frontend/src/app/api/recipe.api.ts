@@ -146,6 +146,19 @@ export class RecipeApi {
         "https://flammenpapst.de/cdn/shop/articles/20230719203822-adobestock_53692138-1024x683.jpg?v=1689799580",
       courseId: 3,
     },
+    {
+      id: 19,
+      name: "Eingelegte Zwiebeln",
+      image: "https://s.zentrum-der-gesundheit.de/img/f1fe90efe2b312be17b8265c70d094a3",
+      courseId: 3,
+    },
+    {
+      id: 20,
+      name: "Acai Bowl",
+      image:
+        "https://media.dm-static.com/image/upload/q_auto:eco,f_auto/content/rootpage-dm-shop-de-at/resource/image/469864/widescreen/1200/500/19d803055cba1938a882d5338f78d124/AC01073A41CABEBFB24BB3922011882E/acai-bowl-selber-machen-aufmacher.jpg",
+      courseId: 1,
+    },
   ];
 
   fetchAll() {
