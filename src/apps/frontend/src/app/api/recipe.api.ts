@@ -159,6 +159,27 @@ export class RecipeApi {
         "https://media.dm-static.com/image/upload/q_auto:eco,f_auto/content/rootpage-dm-shop-de-at/resource/image/469864/widescreen/1200/500/19d803055cba1938a882d5338f78d124/AC01073A41CABEBFB24BB3922011882E/acai-bowl-selber-machen-aufmacher.jpg",
       courseId: 1,
     },
+    {
+      id: 21,
+      name: "Käse Lauch Suppe",
+      image:
+        "https://www.einfachkochen.de/sites/einfachkochen.de/files/styles/full_width_tablet_4_3/public/2021-05/kaese_lauch_suppe_mit_hackfleisch_1_0.jpg?h=a1e1a043&itok=7NupbBS5",
+      courseId: 1,
+    },
+    {
+      id: 22,
+      name: "Creme Brulee",
+      image:
+        "https://www.einfachkochen.de/sites/einfachkochen.de/files/styles/full_width_tablet_4_3/public/2021-06/creme_brulee_1_0.jpg?h=10d202d3&itok=_qvwg7eC",
+      courseId: 3,
+    },
+    {
+      id: 23,
+      name: "Steak",
+      image:
+        "https://cdn.shopify.com/s/files/1/1433/0188/files/2017_03_13_ES_-_TXOGITXU_-_Roastbeef_Su_003_1024x1024.jpg?v=1511867277",
+      courseId: 1,
+    },
   ];
 
   fetchAll() {
