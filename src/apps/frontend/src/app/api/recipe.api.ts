@@ -1,196 +1,43 @@
-import { Injectable } from "@angular/core";
-import { delay, of, throwError } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+
+import { environment } from "../../environment/environment";
+import { Image } from "./image.api";
+import { Ingredient } from "./ingredients.api";
+import { Step } from "./step.api";
 
 export type Recipe = {
   id: number;
+  categoryId: number;
   name: string;
-  image: string;
-  courseId: number;
+  timestamp: Date;
 };
 
 @Injectable({ providedIn: "root" })
 export class RecipeApi {
-  recipes: Recipe[] = [
-    {
-      id: 0,
-      name: "Spaghetti Bolognese",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYns6c9182_yTzj2apb5amdNQE0BKKL4qN_w&s",
-      courseId: 1,
-    },
-    {
-      id: 1,
-      name: "Spaghetti Carbonara",
-      image:
-        "https://img.chefkoch-cdn.de/rezepte/1298241234947062/bilder/1509530/crop-960x540/carbonara-wie-bei-der-mamma-in-rom.jpg",
-      courseId: 1,
-    },
-    {
-      id: 2,
-      name: "Lasagne",
-      image:
-        "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/69EE02DA-213D-44A2-8B08-A590225B221B/Derivates/ddaaebc0-028c-4c3c-b409-281d03dcfe19.jpg",
-      courseId: 1,
-    },
-    {
-      id: 3,
-      name: "Kartoffelgratin",
-      image: "https://images.lecker.de/kartoffelgratin-bjpg,id=5dab1742,b=lecker,w=1600,rm=sk.webp",
-      courseId: 1,
-    },
-    {
-      id: 4,
-      name: "Bruschetta",
-      image: "https://www.koch-mit.de/app/uploads/2019/02/AdobeStock_62743914.jpeg",
-      courseId: 0,
-    },
-    {
-      id: 5,
-      name: "Tiramisu",
-      image:
-        "https://img.chefkoch-cdn.de/rezepte/264171102553424/bilder/1518856/crop-960x540/tiramisu.jpg",
-      courseId: 2,
-    },
-    {
-      id: 6,
-      name: "Spinat Hackfleischauflauf",
-      image:
-        "https://img.chefkoch-cdn.de/rezepte/304951110762739/bilder/174512/crop-642x428/spinat-hackfleisch-auflauf.jpg",
-      courseId: 1,
-    },
-    {
-      id: 6,
-      name: "Wraps",
-      image:
-        "https://recipesblob.oetker.de/assets/a20751e430934ecb9ca35ce22164efd2/1920x1153/vegane-wraps-mit-avocado-minzecreme-quer1-ausschnitt.webp",
-      courseId: 1,
-    },
-    {
-      id: 7,
-      name: "Tacos",
-      image:
-        "https://images.ctfassets.net/hg3j0azooxs3/2jIP5VsxxzLQtZ0jw7GgRV/31324ce94e8d6caa8bee926b440bf4b5/050823_Recipe_B009_Bolognese-Tacos_3x4_Galery1.jpg",
-      courseId: 1,
-    },
-    {
-      id: 8,
-      name: "Burger",
-      image: "https://www.motioncooking.com/wp-content/uploads/2021/11/DSC05650.jpg",
-      courseId: 1,
-    },
-    {
-      id: 9,
-      name: "Kartoffelwedges",
-      image: "https://www.gaumenfreundin.de/wp-content/uploads/2022/09/Kartoffel-Wedges.jpg",
-      courseId: 3,
-    },
-    {
-      id: 10,
-      name: "Gefüllte Paprika",
-      image:
-        "https://emmikochteinfach.de/wp-content/uploads/2022/01/SEO-Gefuellte-Paprika-mit-Hackfleisch-5.jpg",
-      courseId: 1,
-    },
-    {
-      id: 11,
-      name: "Pizzateig",
-      image:
-        "https://www.einfachbacken.de/sites/einfachbacken.de/files/styles/full_width_tablet_4_3/public/2019-02/pizzateig-grundrezept.jpg?h=a1e1a043&itok=k_CqDTme",
-      courseId: 1,
-    },
-    {
-      id: 12,
-      name: "Menemen",
-      image: "https://www.bulgurkitchen.de/wp-content/uploads/2023/11/menemen-in-der-pfanne.jpg",
-      courseId: 0,
-    },
-    {
-      id: 13,
-      name: "Nachos",
-      image:
-        "https://img.taste.com.au/eAW0Y3k4/taste/2016/11/vegetarian-nachos-with-guacamole-86796-1.jpeg",
-      courseId: 4,
-    },
-    {
-      id: 14,
-      name: "Spaghetti Pomodoro",
-      image:
-        "https://fitaliancook.com/wp-content/uploads/2023/08/spaghetti-pomodoro-beitragsbild.jpg",
-      courseId: 1,
-    },
-    {
-      id: 15,
-      name: "Tortellini",
-      image:
-        "https://www.spicebar.de/media/cache/resized//uploads/rezepte/rezepte64-image-990x557.jpg",
-      courseId: 1,
-    },
-    {
-      id: 16,
-      name: "Nudelauflauf",
-      image:
-        "https://www.cuisini-blog.de/wp-content/uploads/2023/06/einfacher-nudelauflauf-mit-schinken-und-kaese-1.jpg",
-      courseId: 1,
-    },
-    {
-      id: 17,
-      name: "Asiatischer Gurkensalat",
-      image:
-        "https://cdn.asiastreetfood.com/uploads/Korean-Barbecue-Banchan-Gurke-Rezept-2.jpg?strip=all&lossy=1&quality=80&ssl=1",
-      courseId: 3,
-    },
-    {
-      id: 18,
-      name: "Klassischer Gurkensalat",
-      image:
-        "https://flammenpapst.de/cdn/shop/articles/20230719203822-adobestock_53692138-1024x683.jpg?v=1689799580",
-      courseId: 3,
-    },
-    {
-      id: 19,
-      name: "Eingelegte Zwiebeln",
-      image: "https://s.zentrum-der-gesundheit.de/img/f1fe90efe2b312be17b8265c70d094a3",
-      courseId: 3,
-    },
-    {
-      id: 20,
-      name: "Acai Bowl",
-      image:
-        "https://media.dm-static.com/image/upload/q_auto:eco,f_auto/content/rootpage-dm-shop-de-at/resource/image/469864/widescreen/1200/500/19d803055cba1938a882d5338f78d124/AC01073A41CABEBFB24BB3922011882E/acai-bowl-selber-machen-aufmacher.jpg",
-      courseId: 1,
-    },
-    {
-      id: 21,
-      name: "Käse Lauch Suppe",
-      image:
-        "https://www.einfachkochen.de/sites/einfachkochen.de/files/styles/full_width_tablet_4_3/public/2021-05/kaese_lauch_suppe_mit_hackfleisch_1_0.jpg?h=a1e1a043&itok=7NupbBS5",
-      courseId: 1,
-    },
-    {
-      id: 22,
-      name: "Creme Brulee",
-      image:
-        "https://www.einfachkochen.de/sites/einfachkochen.de/files/styles/full_width_tablet_4_3/public/2021-06/creme_brulee_1_0.jpg?h=10d202d3&itok=_qvwg7eC",
-      courseId: 3,
-    },
-    {
-      id: 23,
-      name: "Steak",
-      image:
-        "https://cdn.shopify.com/s/files/1/1433/0188/files/2017_03_13_ES_-_TXOGITXU_-_Roastbeef_Su_003_1024x1024.jpg?v=1511867277",
-      courseId: 1,
-    },
-  ];
+  private readonly http = inject(HttpClient);
 
-  fetchAll() {
-    return of(this.recipes).pipe(delay(750));
+  private readonly baseUrl = `${environment.api.baseUrl}/api/v1/recipes`;
+
+  fetchMany() {
+    return this.http.get<Recipe[]>(this.baseUrl);
   }
 
   fetchById(recipeId: number) {
-    const recipe = this.recipes.find((recipe) => recipe.id === recipeId);
+    return this.http.get<Recipe>(`${this.baseUrl}/${recipeId}`);
+  }
 
-    if (!recipe) return throwError(() => new Error(`no recipe found with id ${recipeId}`));
+  // ------
 
-    return of(recipe).pipe(delay(750));
+  fetchManyIngredientsByRecipeId(recipeId: number) {
+    return this.http.get<Ingredient[]>(`${this.baseUrl}/${recipeId}/ingredients`);
+  }
+
+  fetchManyImagesByRecipeId(recipeId: number) {
+    return this.http.get<Image[]>(`${this.baseUrl}/${recipeId}/images`);
+  }
+
+  fetchManyStepsByRecipeId(recipeId: number) {
+    return this.http.get<Step[]>(`${this.baseUrl}/${recipeId}/steps`);
   }
 }
