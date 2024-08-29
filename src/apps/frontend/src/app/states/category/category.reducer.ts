@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
 import { Category } from "../../api/category.api";
 import { GlobalCategoryActions } from "./category.action";
@@ -37,6 +37,14 @@ export const categoryFeature = createFeature({
       categories: [],
     }))
   ),
+  extraSelectors: ({ selectCategories }) => {
+    const selectCategoryById = (categoryId: number) =>
+      createSelector(selectCategories, (categories) =>
+        categories.find((category) => category.id === categoryId)
+      );
+
+    return { selectCategoryById };
+  },
 });
 
 export const {
@@ -45,4 +53,5 @@ export const {
   selectCategories: CategorySelectCategories,
   selectStatus: CategorySelectStatus,
   selectStatusAction: CategorySelectStatusAction,
+  selectCategoryById: CategorySelectCategoryById,
 } = categoryFeature;

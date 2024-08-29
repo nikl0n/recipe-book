@@ -5,7 +5,7 @@ import { of } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 
 import { CategoryApi } from "../../api/category.api";
-import { CategoryActions } from "./category.action";
+import { GlobalCategoryActions } from "./category.action";
 
 @Injectable()
 export class CategoryEffect {
@@ -14,11 +14,13 @@ export class CategoryEffect {
 
   fetchAll$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.fetchAll),
+      ofType(GlobalCategoryActions.fetchAll),
       switchMap(() =>
         this.categoryApi.fetchMany().pipe(
-          map((categories) => CategoryActions.fetchAllSuccess({ categories })),
-          catchError((error: HttpErrorResponse) => of(CategoryActions.fetchAllFailure({ error })))
+          map((categories) => GlobalCategoryActions.fetchAllSuccess({ categories })),
+          catchError((error: HttpErrorResponse) =>
+            of(GlobalCategoryActions.fetchAllFailure({ error }))
+          )
         )
       )
     )
