@@ -1,11 +1,11 @@
 import { Component, inject, input } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
-import { Router } from "@angular/router";
-import { Course } from "../../api/course.api";
-import { Recipe } from "../../api/recipe.api";
+
+import { ExtendedRecipe } from "../../pages/recipe-list/recipe-list.page";
 
 @Component({
   selector: "app-recipe",
@@ -17,8 +17,7 @@ import { Recipe } from "../../api/recipe.api";
 export class RecipeComponent {
   router = inject(Router);
 
-  recipe = input.required<Recipe>();
-  course = input.required<Course>();
+  recipe = input.required<ExtendedRecipe>();
 
   onClickRecipe() {
     this.router.navigateByUrl(`recipes/${this.recipe().id}`);

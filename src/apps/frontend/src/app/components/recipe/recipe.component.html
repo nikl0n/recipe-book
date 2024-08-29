@@ -1,8 +1,10 @@
 <mat-card class="recipe" appearance="outlined" (click)="onClickRecipe()">
-  <img mat-card-image [src]="recipe().image" />
+  @for (image of recipe().images; track $index) {
+    <img mat-card-image [src]="image" />
+  }
 
   <span class="headline">{{ recipe().name }}</span>
-  <small>{{ course().name }}</small>
+  <small>{{ recipe().category?.name }}</small>
 
   <mat-card-actions>
     <button mat-icon-button>
