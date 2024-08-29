@@ -24,11 +24,13 @@ export const recipeFeature = createFeature({
       status: "LOADING" as const,
       statusAction: "READ" as const,
     })),
+
     on(RecipeActions.fetchAllSuccess, (state, { recipes }) => ({
       ...state,
       status: "SUCCESS" as const,
       recipes,
     })),
+
     on(RecipeActions.fetchByIdSuccess, (state, { recipe }) => {
       let recipes = [...state.recipes];
 
@@ -45,6 +47,7 @@ export const recipeFeature = createFeature({
         recipes,
       };
     }),
+
     on(RecipeActions.fetchAllFailure, RecipeActions.fetchByIdFailure, (state) => ({
       ...state,
       status: "ERROR" as const,

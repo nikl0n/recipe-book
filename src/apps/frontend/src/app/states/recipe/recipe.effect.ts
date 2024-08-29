@@ -16,7 +16,7 @@ export class RecipeEffect {
     this.actions$.pipe(
       ofType(RecipeActions.fetchAll),
       switchMap(() =>
-        this.recipeApi.fetchAll().pipe(
+        this.recipeApi.fetchMany().pipe(
           map((recipes) => RecipeActions.fetchAllSuccess({ recipes })),
           catchError((error: HttpErrorResponse) => of(RecipeActions.fetchAllFailure({ error })))
         )
