@@ -9,7 +9,7 @@ import { RecipeApi } from "../../api/recipe.api";
 import { IngredientActions } from "./ingredient.action";
 
 @Injectable()
-export class ImageEffect {
+export class IngredientEffect {
   actions$ = inject(Actions);
   recipeApi = inject(RecipeApi);
 
