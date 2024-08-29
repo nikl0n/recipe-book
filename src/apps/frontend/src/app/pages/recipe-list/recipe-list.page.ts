@@ -3,13 +3,20 @@ import { Store } from "@ngrx/store";
 
 import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
 
-import { Course } from "../../api/course.api";
+import { Category } from "../../api/category.api";
+import { Image } from "../../api/image.api";
+import { Recipe } from "../../api/recipe.api";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
-import { CourseActions } from "../../states/course/course.action";
-import { CourseSelectCourses, CourseSelectStatus } from "../../states/course/course.reducer";
+import { CategorySelectCategories } from "../../states/category/category.reducer";
+import { ImageSelectImages, ImageSelectStatus } from "../../states/image/image.reducer";
 import { RecipeActions } from "../../states/recipe/recipe.action";
 import { RecipeSelectRecipes, RecipeSelectStatus } from "../../states/recipe/recipe.reducer";
+
+export type ExtendedRecipe = Recipe & {
+  category: Category | undefined;
+  images: Image[];
+};
 
 @Component({
   selector: "app-recipe-list",
@@ -24,46 +31,46 @@ export class RecipeListPage implements OnInit {
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipes = this.store.selectSignal(RecipeSelectRecipes);
 
-  courseStatus = this.store.selectSignal(CourseSelectStatus);
-  courses = this.store.selectSignal(CourseSelectCourses);
+  imageStatus = this.store.selectSignal(ImageSelectStatus);
+  images = this.store.selectSignal(ImageSelectImages);
+
+  categories = this.store.selectSignal(CategorySelectCategories);
+
+  activeCategoryId = signal<Category["id"] | null>(null);
 
   extendedRecipe = computed(() => {
-    let recipes = this.recipes()
+    let recipes: ExtendedRecipe[] = this.recipes()
       .map((recipe) => ({
         ...recipe,
-        course: this.courses().find((course) => course.id === recipe.courseId) ?? null,
+        category: this.categories().find((category) => category.id === recipe.categoryId),
+        images: this.images().filter((image) => image.recipeId),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    if (typeof this.activeCourseId() === "number") {
-      recipes = recipes.filter((recipe) => recipe.courseId === this.activeCourseId());
+    if (typeof this.activeCategoryId() === "number") {
+      recipes = recipes.filter((recipe) => recipe.categoryId === this.activeCategoryId());
     }
 
     return recipes;
   });
 
-  activeCourseId = signal<Course["id"] | null>(null);
-
   isLoading = computed(() => {
-    const statuses = [this.recipeStatus(), this.courseStatus()];
-
-    return statuses.some((status) => status === "LOADING");
+    return [this.recipeStatus(), this.imageStatus()].some((status) => status === "LOADING");
   });
 
   ngOnInit(): void {
     this.store.dispatch(RecipeActions.fetchAll());
-    this.store.dispatch(CourseActions.fetchAll());
   }
 
-  onClickChipCourse(event: MatChipListboxChange) {
-    const courseId = event.value as Course["id"];
+  onClickChipCategory(event: MatChipListboxChange) {
+    const categoryId = event.value as Category["id"];
 
-    if (courseId === undefined) {
-      this.activeCourseId.set(null);
+    if (categoryId === undefined) {
+      this.activeCategoryId.set(null);
 
       return;
     }
 
-    this.activeCourseId.set(courseId);
+    this.activeCategoryId.set(categoryId);
   }
 }
