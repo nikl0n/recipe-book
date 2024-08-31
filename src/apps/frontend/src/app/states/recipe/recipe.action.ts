@@ -6,6 +6,8 @@ import { Recipe } from "../../api/recipe.api";
 export const RecipeActions = createActionGroup({
   source: "Recipe",
   events: {
+    setLastFetched: props<{ componentName: string }>(),
+
     fetchAll: emptyProps(),
     fetchAllSuccess: props<{ recipes: Recipe[] }>(),
     fetchAllFailure: props<{ error: HttpErrorResponse }>(),

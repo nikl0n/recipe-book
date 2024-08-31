@@ -7,18 +7,26 @@ interface RecipeState {
   recipes: Recipe[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
+  lastFetched: string | null;
 }
 
 const initialState: RecipeState = {
   recipes: [],
   status: "IDLE",
   statusAction: "READ",
+  lastFetched: null,
 };
 
 export const recipeFeature = createFeature({
   name: "recipe",
   reducer: createReducer(
     initialState,
+
+    on(RecipeActions.setLastFetched, (state, { componentName }) => ({
+      ...state,
+      lastFetched: componentName,
+    })),
+
     on(RecipeActions.fetchAll, RecipeActions.fetchById, (state) => ({
       ...state,
       status: "LOADING" as const,
@@ -69,4 +77,5 @@ export const {
   selectStatus: RecipeSelectStatus,
   selectStatusAction: RecipeSelectStatusAction,
   selectRecipeById: RecipeSelectRecipeById,
+  selectLastFetched: RecipeSelectLastFetched,
 } = recipeFeature;
