@@ -7,18 +7,25 @@ interface IngredientState {
   ingredients: Ingredient[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
+  lastFetched: string | null;
 }
 
 const initialState: IngredientState = {
   ingredients: [],
   status: "IDLE",
   statusAction: "READ",
+  lastFetched: null,
 };
 
 export const ingredientFeature = createFeature({
   name: "ingredient",
   reducer: createReducer(
     initialState,
+    on(IngredientActions.setLastFetched, (state, { componentName }) => ({
+      ...state,
+      lastFetched: componentName,
+    })),
+
     on(IngredientActions.fetchByRecipeId, (state) => ({
       ...state,
       status: "LOADING" as const,
