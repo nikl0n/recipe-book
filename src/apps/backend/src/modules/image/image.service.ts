@@ -5,6 +5,10 @@ import { PrismaClient } from "@prisma/client";
 export class ImageService {
   prisma = new PrismaClient();
 
+  findMany() {
+    return this.prisma.images.findMany();
+  }
+
   findManyByRecipeId(recipeId: number) {
     return this.prisma.images.findMany({
       where: {
