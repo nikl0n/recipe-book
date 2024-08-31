@@ -7,18 +7,25 @@ interface StepState {
   steps: Step[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
+  lastFetched: string | null;
 }
 
 const initialState: StepState = {
   steps: [],
   status: "IDLE",
   statusAction: "READ",
+  lastFetched: null,
 };
 
 export const stepFeature = createFeature({
   name: "step",
   reducer: createReducer(
     initialState,
+    on(StepActions.setLastFetched, (state, { componentName }) => ({
+      ...state,
+      lastFetched: componentName,
+    })),
+
     on(StepActions.fetchByRecipeId, (state) => ({
       ...state,
       status: "LOADING" as const,
