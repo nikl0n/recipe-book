@@ -1,17 +1,19 @@
 @if (isLoading()) {
-<app-loading></app-loading>
+  <app-loading></app-loading>
 } @else {
-<section id="filter">
-  <mat-chip-listbox (change)="onClickChipCategory($event)">
-    @for (course of categories(); track $index) {
-    <mat-chip-option [value]="course.id">{{course.name}}</mat-chip-option>
-    }
-  </mat-chip-listbox>
-</section>
+  <section id="filter">
+    <mat-chip-listbox (change)="onClickChipCategory($event)">
+      @for (course of categories(); track $index) {
+        <mat-chip-option [value]="course.id">{{ course.name }}</mat-chip-option>
+      }
+    </mat-chip-listbox>
+  </section>
 
-<section id="recipes">
-  @for (recipe of extendedRecipe(); track $index) { @if (recipe.category) {
-  <app-recipe [recipe]="recipe"></app-recipe>
-  } }
-</section>
+  <section id="recipes">
+    @for (recipe of extendedRecipe(); track $index) {
+      @if (recipe.category) {
+        <app-recipe [recipe]="recipe"></app-recipe>
+      }
+    }
+  </section>
 }

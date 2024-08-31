@@ -1,9 +1,8 @@
 {
-	"name": "recipe-book",
-	"version": "1.0.0",
-	"description": "",
-	"keywords": [],
-	"author": "nikl0n",
-	"license": "ISC"
+  "name": "recipe-book",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "nikl0n",
+  "license": "ISC"
 }
-
