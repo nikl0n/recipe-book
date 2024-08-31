@@ -9,9 +9,14 @@ import { Recipe } from "../../api/recipe.api";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
+import { ImageActions } from "../../states/image/image.action";
 import { ImageSelectImages, ImageSelectStatus } from "../../states/image/image.reducer";
 import { RecipeActions } from "../../states/recipe/recipe.action";
-import { RecipeSelectRecipes, RecipeSelectStatus } from "../../states/recipe/recipe.reducer";
+import {
+  RecipeSelectLastFetched,
+  RecipeSelectRecipes,
+  RecipeSelectStatus,
+} from "../../states/recipe/recipe.reducer";
 
 export type ExtendedRecipe = Recipe & {
   category: Category | undefined;
@@ -30,6 +35,7 @@ export class RecipeListPage implements OnInit {
 
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipes = this.store.selectSignal(RecipeSelectRecipes);
+  recipeLastFetched = this.store.selectSignal(RecipeSelectLastFetched);
 
   imageStatus = this.store.selectSignal(ImageSelectStatus);
   images = this.store.selectSignal(ImageSelectImages);
@@ -43,7 +49,7 @@ export class RecipeListPage implements OnInit {
       .map((recipe) => ({
         ...recipe,
         category: this.categories().find((category) => category.id === recipe.categoryId),
-        images: this.images().filter((image) => image.recipeId),
+        images: this.images().filter((image) => image.recipeId === recipe.id),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -59,7 +65,13 @@ export class RecipeListPage implements OnInit {
   });
 
   ngOnInit(): void {
+    if (this.recipeLastFetched() === "recipe-list") return;
+
     this.store.dispatch(RecipeActions.fetchAll());
+    this.store.dispatch(RecipeActions.setLastFetched({ componentName: "recipe-list" }));
+
+    this.store.dispatch(ImageActions.fetchMany());
+    this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-list" }));
   }
 
   onClickChipCategory(event: MatChipListboxChange) {
