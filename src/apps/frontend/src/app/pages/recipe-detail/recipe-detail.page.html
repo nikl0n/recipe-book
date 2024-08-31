@@ -1,3 +1,43 @@
 @if (isLoading()) {
 <app-loading></app-loading>
-} @else { yo }
+} @else { @if (extendedRecipe(); as recipe) {
+<section id="recipe">
+  <div class="recipe-header">
+    <div class="header-image">
+      @if (recipe.images[0]; as image) {
+      <img [src]="image.base64" />
+      } @else {
+      <img [src]="'recipe-placeholder.png'" />
+      }
+    </div>
+    <div class="header-ingredients">
+      <h1 style="margin-bottom: 10px">{{recipe.name}}</h1>
+
+      @if (recipe.ingredients && recipe.ingredients.length > 0) {
+      <h3 style="margin-bottom: 5px">Zutaten</h3>
+
+      @for (ingredient of recipe.ingredients; track $index) {
+      <div style="display: flex">
+        <div>{{ingredient.amount}}</div>
+        <div style="margin-right: 5px">{{ingredient.unit?.name}}</div>
+        <div>{{ingredient.name}}</div>
+      </div>
+      } } @else{
+      <i>Keine Zutaten gefunden</i>
+      }
+    </div>
+  </div>
+  <div class="recipe-main">
+    @if (recipe.steps && recipe.steps.length > 0) { @for (step of recipe.steps; track $index) {
+    <div style="display: flex; gap: 5px">
+      <b>{{$index+1}}.</b>
+      <div>{{step.text}}</div>
+    </div>
+    } } @else {
+    <i>Keine Schritte gefunden</i>
+    }
+  </div>
+</section>
+} @else {
+<i>Kein Rezept gefunden</i>
+} }

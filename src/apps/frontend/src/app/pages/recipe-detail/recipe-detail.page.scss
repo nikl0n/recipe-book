@@ -1,0 +1,32 @@
+#recipe {
+  padding: 10px 100px 10px 100px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .recipe-header {
+    display: flex;
+
+    gap: 10px;
+
+    .header-image {
+      width: 400px;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        max-height: 400px;
+        border-radius: 8px;
+      }
+    }
+
+    .header-ingredients {
+      flex: 1;
+    }
+  }
+
+  .recipe-main {
+    padding-left: 10px;
+  }
+}
