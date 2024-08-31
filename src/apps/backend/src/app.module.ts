@@ -1,4 +1,6 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module, OnModuleInit } from "@nestjs/common";
+
+import { PrismaClient } from "@prisma/client";
 
 import { CategoryModule } from "./modules/category/category.module";
 import { ImageModule } from "./modules/image/image.module";
@@ -12,4 +14,19 @@ import { UnitModule } from "./modules/unit/unit.module";
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  prisma = new PrismaClient();
+  logger = new Logger(AppModule.name);
+
+  async onModuleInit() {
+    try {
+      await this.prisma.$connect();
+
+      this.logger.log("Database connection established");
+    } catch (error) {
+      this.logger.error("Unable to connect to the database");
+
+      process.exit(1);
+    }
+  }
+}
