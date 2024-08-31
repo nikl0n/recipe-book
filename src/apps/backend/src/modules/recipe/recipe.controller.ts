@@ -19,6 +19,11 @@ export class RecipeController {
     return this.recipeService.findMany();
   }
 
+  @Get(":id")
+  findUnique(@Param("id", ParseIntPipe) recipeId: number) {
+    return this.recipeService.findUnique(recipeId);
+  }
+
   @Get(":id/steps")
   async findManyStepsByRecipeId(@Param("id", ParseIntPipe) recipeId: number) {
     const recipe = await this.recipeService.findById(recipeId);

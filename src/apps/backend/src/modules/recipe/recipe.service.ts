@@ -17,4 +17,8 @@ export class RecipeService {
   findMany() {
     return this.prisma.recipes.findMany();
   }
+
+  findUnique(id: number) {
+    return this.prisma.recipes.findUnique({ where: { id } });
+  }
 }
