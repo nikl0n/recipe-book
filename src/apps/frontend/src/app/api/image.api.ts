@@ -1,4 +1,7 @@
-import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+
+import { environment } from "../../environment/environment";
 
 export type Image = {
   id: number;
@@ -9,6 +12,11 @@ export type Image = {
 
 @Injectable({ providedIn: "root" })
 export class ImageApi {
-  // private readonly http = inject(HttpClient);
-  // private readonly baseUrl = `${environment.api.baseUrl}/api/v1/images`;
+  private readonly http = inject(HttpClient);
+
+  private readonly baseUrl = `${environment.api.baseUrl}/api/v1/images`;
+
+  fetchMany() {
+    return this.http.get<Image[]>(this.baseUrl);
+  }
 }
