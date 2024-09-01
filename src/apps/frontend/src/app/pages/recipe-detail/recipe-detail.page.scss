@@ -1,5 +1,5 @@
 #recipe {
-  padding: 10px 100px 10px 100px;
+  padding: 10px 100px;
 
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
     gap: 10px;
 
     .header-image {
-      width: 400px;
+      max-width: 400px;
 
       img {
         object-fit: cover;
@@ -28,5 +28,17 @@
 
   .recipe-main {
     padding-left: 10px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #recipe {
+    padding: 10px 50px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .recipe-header {
+    flex-direction: column;
   }
 }

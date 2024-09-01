@@ -1,3 +1,26 @@
 #recipe-create {
-  padding: 10px 100px 10px 100px;
+  padding: 10px 100px;
+}
+
+.test {
+  display: flex;
+  gap: 10px;
+}
+
+@media only screen and (max-width: 900px) {
+  #recipe-create {
+    padding: 10px 50px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #recipe-create {
+    padding: 10px 35px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .test {
+    flex-direction: column;
+  }
 }
