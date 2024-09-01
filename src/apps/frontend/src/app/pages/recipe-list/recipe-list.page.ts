@@ -1,7 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, inject, OnInit, signal } from "@angular/core";
+import { Router } from "@angular/router";
 
+import { MatButtonModule } from "@angular/material/button";
 import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
+import { MatIconModule } from "@angular/material/icon";
 
 import { Store } from "@ngrx/store";
 
@@ -28,12 +31,22 @@ export type ExtendedRecipe = Recipe & {
 @Component({
   selector: "app-recipe-list",
   standalone: true,
-  imports: [MatChipsModule, RecipeComponent, LoadingComponent, CommonModule],
+  imports: [
+    CommonModule,
+
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+
+    RecipeComponent,
+    LoadingComponent,
+  ],
   templateUrl: "./recipe-list.page.html",
   styleUrl: "./recipe-list.page.scss",
 })
 export class RecipeListPage implements OnInit {
   store = inject(Store);
+  router = inject(Router);
 
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipes = this.store.selectSignal(RecipeSelectRecipes);
@@ -88,7 +101,15 @@ export class RecipeListPage implements OnInit {
     this.activeCategoryId.set(categoryId);
   }
 
+  onClickRecipe(id: number) {
+    this.router.navigateByUrl(`recipes/${id}`);
+  }
+
   onClickDeleteRecipe(recipeId: number) {
     this.store.dispatch(RecipeActions.delete({ recipeId }));
+  }
+
+  onClickCreateRecipe() {
+    this.router.navigateByUrl(`recipes/create`);
   }
 }

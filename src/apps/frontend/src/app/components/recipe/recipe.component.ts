@@ -1,5 +1,4 @@
-import { Component, inject, input, output } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, input, output } from "@angular/core";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -15,13 +14,8 @@ import { ExtendedRecipe } from "../../pages/recipe-list/recipe-list.page";
   styleUrl: "./recipe.component.scss",
 })
 export class RecipeComponent {
-  router = inject(Router);
-
   onClickDeleteRecipe = output<number>();
+  onClickRecipe = output<number>();
 
   recipe = input.required<ExtendedRecipe>();
-
-  onClickRecipe() {
-    this.router.navigateByUrl(`recipes/${this.recipe().id}`);
-  }
 }
