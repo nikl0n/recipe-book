@@ -11,7 +11,9 @@
     "dev:watch": "nest start --watch",
     "prod": "node dist/main",
     "prisma:pull": "pnpm exec prisma db pull",
-    "prisma:generate": "pnpm exec prisma generate"
+    "prisma:push": "pnpm exec prisma db push",
+    "prisma:generate": "pnpm exec prisma generate",
+    "prisma:seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
