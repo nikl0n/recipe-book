@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { Component, computed, effect, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+
 import { Store } from "@ngrx/store";
 
 import { LoadingComponent } from "../../components/loading/loading.component";
@@ -24,7 +26,7 @@ import { UnitSelectUnits } from "../../states/unit/unit.reducer";
 @Component({
   selector: "app-recipe-detail",
   standalone: true,
-  imports: [LoadingComponent],
+  imports: [LoadingComponent, CommonModule],
   templateUrl: "./recipe-detail.page.html",
   styleUrl: "./recipe-detail.page.scss",
 })
