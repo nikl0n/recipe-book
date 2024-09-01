@@ -18,7 +18,11 @@ export class RecipeService {
   }
 
   findMany() {
-    return this.prisma.recipes.findMany();
+    return this.prisma.recipes.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
   }
 
   findUnique(id: number) {
