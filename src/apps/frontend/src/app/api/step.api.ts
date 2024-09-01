@@ -4,9 +4,11 @@ export type Step = {
   id: number;
   recipeId: number;
   order: number;
-  text: number;
+  text: string;
   timestamp: Date;
 };
+
+export type CreateStep = Omit<Step, "id" | "timestamp" | "recipeId">;
 
 @Injectable({ providedIn: "root" })
 export class StepApi {
