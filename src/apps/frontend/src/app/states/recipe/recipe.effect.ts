@@ -35,4 +35,28 @@ export class RecipeEffect {
       )
     )
   );
+
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecipeActions.create),
+      switchMap(({ recipe }) =>
+        this.recipeApi.create(recipe).pipe(
+          map((recipe) => RecipeActions.createSuccess({ recipe })),
+          catchError((error: HttpErrorResponse) => of(RecipeActions.createFailure({ error })))
+        )
+      )
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecipeActions.delete),
+      switchMap(({ recipeId }) =>
+        this.recipeApi.delete(recipeId).pipe(
+          map((recipe) => RecipeActions.deleteSuccess({ recipe })),
+          catchError((error: HttpErrorResponse) => of(RecipeActions.deleteFailure({ error })))
+        )
+      )
+    )
+  );
 }

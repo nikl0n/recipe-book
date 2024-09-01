@@ -33,6 +33,14 @@ export class RecipeApi {
     return this.http.get<Recipe>(`${this.baseUrl}/${recipeId}`);
   }
 
+  create(recipe: CreateRecipe) {
+    return this.http.post<Recipe>(`${this.baseUrl}`, recipe);
+  }
+
+  delete(recipeId: number) {
+    return this.http.delete<Recipe>(`${this.baseUrl}/${recipeId}`);
+  }
+
   // ------
 
   fetchManyIngredientsByRecipeId(recipeId: number) {

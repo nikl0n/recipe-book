@@ -39,7 +39,7 @@ export const recipeFeature = createFeature({
       recipes,
     })),
 
-    on(RecipeActions.fetchByIdSuccess, (state, { recipe }) => {
+    on(RecipeActions.fetchByIdSuccess, RecipeActions.createSuccess, (state, { recipe }) => {
       let recipes = [...state.recipes];
 
       const oldRecipeIndex = recipes.findIndex((oldRecipe) => oldRecipe.id === recipe.id);
@@ -56,11 +56,35 @@ export const recipeFeature = createFeature({
       };
     }),
 
-    on(RecipeActions.fetchAllFailure, RecipeActions.fetchByIdFailure, (state) => ({
+    on(RecipeActions.create, (state) => ({
       ...state,
-      status: "ERROR" as const,
-      recipes: [],
-    }))
+      status: "LOADING" as const,
+      statusAction: "CREATE" as const,
+    })),
+
+    on(RecipeActions.delete, (state) => ({
+      ...state,
+      status: "LOADING" as const,
+      statusAction: "DELETE" as const,
+    })),
+
+    on(RecipeActions.deleteSuccess, (state, { recipe }) => ({
+      ...state,
+      recipes: state.recipes.filter((r) => r.id !== recipe.id),
+      status: "SUCCESS" as const,
+    })),
+
+    on(
+      RecipeActions.fetchAllFailure,
+      RecipeActions.fetchByIdFailure,
+      RecipeActions.createFailure,
+      RecipeActions.deleteFailure,
+      (state) => ({
+        ...state,
+        status: "ERROR" as const,
+        recipes: [],
+      })
+    )
   ),
   extraSelectors: ({ selectRecipes }) => {
     const selectRecipeById = (recipeId: number) =>
