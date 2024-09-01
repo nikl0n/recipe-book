@@ -5,15 +5,23 @@ import { PrismaClient } from "@prisma/client";
 export class ImageService {
   prisma = new PrismaClient();
 
-  findMany() {
-    return this.prisma.images.findMany();
-  }
-
   findManyByRecipeId(recipeId: number) {
     return this.prisma.images.findMany({
       where: {
         recipeId,
       },
     });
+  }
+
+  async findFirstPerRecipeIds(recipeIds: number[]) {
+    return Promise.all(
+      recipeIds.map(async (recipeId) =>
+        this.prisma.images.findFirst({
+          where: {
+            recipeId,
+          },
+        })
+      )
+    );
   }
 }

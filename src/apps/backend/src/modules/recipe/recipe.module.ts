@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 
 import { ImageModule } from "../image/image.module";
 import { IngredientModule } from "../ingredient/ingredient.module";
@@ -9,6 +9,7 @@ import { RecipeService } from "./recipe.service";
 @Module({
   controllers: [RecipeController],
   providers: [RecipeService],
-  imports: [StepModule, IngredientModule, ImageModule],
+  exports: [RecipeService],
+  imports: [StepModule, IngredientModule, forwardRef(() => ImageModule)],
 })
 export class RecipeModule {}
