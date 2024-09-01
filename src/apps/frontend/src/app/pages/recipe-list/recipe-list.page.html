@@ -12,7 +12,9 @@
   <section id="recipes">
     @for (recipe of extendedRecipe(); track $index) {
       @if (recipe.category) {
-        <app-recipe [recipe]="recipe"></app-recipe>
+        <app-recipe
+          [recipe]="recipe"
+          (onClickDeleteRecipe)="onClickDeleteRecipe($event)"></app-recipe>
       }
     }
   </section>

@@ -1,4 +1,4 @@
-import { Component, inject, input } from "@angular/core";
+import { Component, inject, input, output } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { MatButtonModule } from "@angular/material/button";
@@ -16,6 +16,8 @@ import { ExtendedRecipe } from "../../pages/recipe-list/recipe-list.page";
 })
 export class RecipeComponent {
   router = inject(Router);
+
+  onClickDeleteRecipe = output<number>();
 
   recipe = input.required<ExtendedRecipe>();
 

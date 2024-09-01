@@ -13,5 +13,10 @@
     <button mat-icon-button>
       <mat-icon>edit</mat-icon>
     </button>
+    <button
+      mat-icon-button
+      (click)="$event.stopPropagation(); onClickDeleteRecipe.emit(recipe().id)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

@@ -1,7 +1,9 @@
+import { CommonModule } from "@angular/common";
 import { Component, computed, inject, OnInit, signal } from "@angular/core";
-import { Store } from "@ngrx/store";
 
 import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
+
+import { Store } from "@ngrx/store";
 
 import { Category } from "../../api/category.api";
 import { Image } from "../../api/image.api";
@@ -26,7 +28,7 @@ export type ExtendedRecipe = Recipe & {
 @Component({
   selector: "app-recipe-list",
   standalone: true,
-  imports: [MatChipsModule, RecipeComponent, LoadingComponent],
+  imports: [MatChipsModule, RecipeComponent, LoadingComponent, CommonModule],
   templateUrl: "./recipe-list.page.html",
   styleUrl: "./recipe-list.page.scss",
 })
@@ -84,5 +86,9 @@ export class RecipeListPage implements OnInit {
     }
 
     this.activeCategoryId.set(categoryId);
+  }
+
+  onClickDeleteRecipe(recipeId: number) {
+    this.store.dispatch(RecipeActions.delete({ recipeId }));
   }
 }
