@@ -5,9 +5,11 @@ export type Ingredient = {
   recipeId: number;
   unitId: number;
   name: string;
-  amount: string;
+  amount: number;
   timestamp: Date;
 };
+
+export type CreateIngredient = Omit<Ingredient, "id" | "timestamp" | "recipeId">;
 
 @Injectable({ providedIn: "root" })
 export class IngredientsApi {
