@@ -3,14 +3,20 @@ import { inject, Injectable } from "@angular/core";
 
 import { environment } from "../../environment/environment";
 import { Image } from "./image.api";
-import { Ingredient } from "./ingredients.api";
-import { Step } from "./step.api";
+import { CreateIngredient, Ingredient } from "./ingredients.api";
+import { CreateStep, Step } from "./step.api";
 
 export type Recipe = {
   id: number;
   categoryId: number;
   name: string;
   timestamp: Date;
+};
+
+export type CreateRecipe = Omit<Recipe, "id" | "timestamp"> & {
+  ingredients: Array<CreateIngredient>;
+  steps: Array<CreateStep>;
+  image: string | null;
 };
 
 @Injectable({ providedIn: "root" })
