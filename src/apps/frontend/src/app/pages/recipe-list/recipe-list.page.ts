@@ -4,13 +4,16 @@ import { Router } from "@angular/router";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
+import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 
 import { Store } from "@ngrx/store";
+import { take } from "rxjs";
 
 import { Category } from "../../api/category.api";
 import { Image } from "../../api/image.api";
 import { Recipe } from "../../api/recipe.api";
+import { DialogAreYouSureComponent } from "../../components/dialog-are-you-sure/dialog-are-you-sure.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
@@ -47,6 +50,7 @@ export type ExtendedRecipe = Recipe & {
 export class RecipeListPage implements OnInit {
   store = inject(Store);
   router = inject(Router);
+  dialog = inject(MatDialog);
 
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipes = this.store.selectSignal(RecipeSelectRecipes);
@@ -106,7 +110,18 @@ export class RecipeListPage implements OnInit {
   }
 
   onClickDeleteRecipe(recipeId: number) {
-    this.store.dispatch(RecipeActions.delete({ recipeId }));
+    const dialogRef = this.dialog.open(DialogAreYouSureComponent, {
+      data: "Möchtest du das Rezept wirklich löschen?",
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result: boolean) => {
+        if (!result) return;
+
+        this.store.dispatch(RecipeActions.delete({ recipeId }));
+      });
   }
 
   onClickCreateRecipe() {
