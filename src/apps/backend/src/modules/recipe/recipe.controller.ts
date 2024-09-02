@@ -8,13 +8,14 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from "@nestjs/common";
 
-import { CreateImage, UpdateImage } from "../image/image.controller";
+import { CreateImage } from "../image/image.controller";
 import { ImageService } from "../image/image.service";
-import { CreateIngredient, UpdateIngredient } from "../ingredient/ingredient.controller";
+import { CreateIngredient } from "../ingredient/ingredient.controller";
 import { IngredientService } from "../ingredient/ingredient.service";
-import { CreateStep, UpdateStep } from "../step/step.controller";
+import { CreateStep } from "../step/step.controller";
 import { StepService } from "../step/step.service";
 import { RecipeService } from "./recipe.service";
 
@@ -56,17 +57,19 @@ export class RecipeController {
     return this.recipeService.create(recipe);
   }
 
-  @Post()
+  @Put(":id")
   async update(
+    @Param("id", ParseIntPipe) recipeId: number,
     @Body()
-    bodyRecipe: UpdateRecipe & {
-      ingredients: UpdateIngredient[];
-      steps: UpdateStep[];
-      image: UpdateImage;
+    bodyRecipe: CreateRecipe & {
+      id: number;
+      ingredients: CreateIngredient[];
+      steps: CreateStep[];
+      image: CreateImage;
     }
   ) {
-    const recipe = await this.recipeService.findById(bodyRecipe.id);
-    if (!recipe) throw new BadRequestException(`no recipe found with id ${bodyRecipe.id}`);
+    const recipe = await this.recipeService.findById(recipeId);
+    if (!recipe) throw new BadRequestException(`no recipe found with id ${recipeId}`);
 
     return this.recipeService.update(bodyRecipe);
   }

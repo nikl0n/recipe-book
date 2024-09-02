@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 
 import { PrismaClient } from "@prisma/client";
-import { CreateImage, UpdateImage } from "../image/image.controller";
-import { CreateIngredient, UpdateIngredient } from "../ingredient/ingredient.controller";
-import { CreateStep, UpdateStep } from "../step/step.controller";
-import { CreateRecipe, UpdateRecipe } from "./recipe.controller";
+
+import { CreateImage } from "../image/image.controller";
+import { CreateIngredient } from "../ingredient/ingredient.controller";
+import { CreateStep } from "../step/step.controller";
+import { CreateRecipe } from "./recipe.controller";
 
 @Injectable()
 export class RecipeService {
@@ -90,10 +91,11 @@ export class RecipeService {
   }
 
   update(
-    recipe: UpdateRecipe & {
-      ingredients: UpdateIngredient[];
-      steps: UpdateStep[];
-      image: UpdateImage;
+    recipe: CreateRecipe & {
+      id: number;
+      ingredients: CreateIngredient[];
+      steps: CreateStep[];
+      image: CreateImage;
     }
   ) {
     const timestamp = new Date();
@@ -109,42 +111,49 @@ export class RecipeService {
         },
       });
 
-      if (recipe.image.id) {
-        await tx.images.update({
-          where: {
-            id: recipe.image.id,
-          },
+      await tx.images.deleteMany({
+        where: {
+          recipeId: recipe.id,
+        },
+      });
+
+      await tx.ingredients.deleteMany({
+        where: {
+          recipeId: recipe.id,
+        },
+      });
+
+      await tx.steps.deleteMany({
+        where: {
+          recipeId: recipe.id,
+        },
+      });
+      if (recipe.image) {
+        await tx.images.create({
           data: {
+            recipeId: recipe.id,
             base64: recipe.image.base64,
-            timestamp: new Date(),
+            timestamp,
           },
         });
       }
 
       if (recipe.ingredients.length > 0) {
-        await tx.ingredients.updateMany({
-          where: {
-            id: {
-              in: recipe.ingredients.map((ingredient) => ingredient.id),
-            },
-          },
+        await tx.ingredients.createMany({
           data: recipe.ingredients.map((ingredient) => ({
+            recipeId: recipe.id,
+            unitId: ingredient.unitId,
             amount: ingredient.amount,
             name: ingredient.name,
-            unitId: ingredient.unitId,
             timestamp,
           })),
         });
       }
 
       if (recipe.steps.length > 0) {
-        await tx.steps.updateMany({
-          where: {
-            id: {
-              in: recipe.steps.map((step) => step.id),
-            },
-          },
+        await tx.steps.createMany({
           data: recipe.steps.map((step) => ({
+            recipeId: recipe.id,
             text: step.text,
             order: step.order,
             timestamp,
