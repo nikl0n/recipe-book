@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 
 import { PrismaClient } from "@prisma/client";
-import { CreateImage } from "../image/image.controller";
-import { CreateIngredient } from "../ingredient/ingredient.controller";
-import { CreateStep } from "../step/step.controller";
-import { CreateRecipe } from "./recipe.controller";
+import { CreateImage, UpdateImage } from "../image/image.controller";
+import { CreateIngredient, UpdateIngredient } from "../ingredient/ingredient.controller";
+import { CreateStep, UpdateStep } from "../step/step.controller";
+import { CreateRecipe, UpdateRecipe } from "./recipe.controller";
 
 @Injectable()
 export class RecipeService {
@@ -80,6 +80,73 @@ export class RecipeService {
             text: step.text,
             order: step.order,
             recipeId: newRecipe.id,
+            timestamp,
+          })),
+        });
+      }
+
+      return newRecipe;
+    });
+  }
+
+  update(
+    recipe: UpdateRecipe & {
+      ingredients: UpdateIngredient[];
+      steps: UpdateStep[];
+      image: UpdateImage;
+    }
+  ) {
+    const timestamp = new Date();
+
+    return this.prisma.$transaction(async (tx) => {
+      const newRecipe = await this.prisma.recipes.update({
+        where: {
+          id: recipe.id,
+        },
+        data: {
+          name: recipe.name,
+          categoryId: recipe.categoryId,
+        },
+      });
+
+      if (recipe.image.id) {
+        await tx.images.update({
+          where: {
+            id: recipe.image.id,
+          },
+          data: {
+            base64: recipe.image.base64,
+            timestamp: new Date(),
+          },
+        });
+      }
+
+      if (recipe.ingredients.length > 0) {
+        await tx.ingredients.updateMany({
+          where: {
+            id: {
+              in: recipe.ingredients.map((ingredient) => ingredient.id),
+            },
+          },
+          data: recipe.ingredients.map((ingredient) => ({
+            amount: ingredient.amount,
+            name: ingredient.name,
+            unitId: ingredient.unitId,
+            timestamp,
+          })),
+        });
+      }
+
+      if (recipe.steps.length > 0) {
+        await tx.steps.updateMany({
+          where: {
+            id: {
+              in: recipe.steps.map((step) => step.id),
+            },
+          },
+          data: recipe.steps.map((step) => ({
+            text: step.text,
+            order: step.order,
             timestamp,
           })),
         });

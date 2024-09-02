@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,11 +10,11 @@ import {
   Post,
 } from "@nestjs/common";
 
-import { CreateImage } from "../image/image.controller";
+import { CreateImage, UpdateImage } from "../image/image.controller";
 import { ImageService } from "../image/image.service";
-import { CreateIngredient } from "../ingredient/ingredient.controller";
+import { CreateIngredient, UpdateIngredient } from "../ingredient/ingredient.controller";
 import { IngredientService } from "../ingredient/ingredient.service";
-import { CreateStep } from "../step/step.controller";
+import { CreateStep, UpdateStep } from "../step/step.controller";
 import { StepService } from "../step/step.service";
 import { RecipeService } from "./recipe.service";
 
@@ -55,13 +56,16 @@ export class RecipeController {
   @Post()
   async update(
     @Body()
-    recipe: CreateRecipe & {
-      ingredients: CreateIngredient[];
-      steps: CreateStep[];
-      image: CreateImage;
+    bodyRecipe: UpdateRecipe & {
+      ingredients: UpdateIngredient[];
+      steps: UpdateStep[];
+      image: UpdateImage;
     }
   ) {
-    return this.recipeService.create(recipe);
+    const recipe = await this.recipeService.findById(bodyRecipe.id);
+    if (!recipe) throw new BadRequestException(`no recipe found with id ${bodyRecipe.id}`);
+
+    return this.recipeService.update(bodyRecipe);
   }
 
   @Delete(":id")
