@@ -21,3 +21,4 @@
 - [ ] pagination
 - [ ] rights to delete, create and edit a recipe
   - [ ] user table with jwt?
+- [ ] packages/types
