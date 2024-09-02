@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createActionGroup, props } from "@ngrx/store";
 
-import { Step } from "../../api/step.api";
+import { ReadStep } from "../../api/step.api";
 
 export const StepActions = createActionGroup({
   source: "Step",
@@ -9,7 +9,7 @@ export const StepActions = createActionGroup({
     setLastFetched: props<{ componentName: string }>(),
 
     fetchByRecipeId: props<{ recipeId: number }>(),
-    fetchByRecipeIdSuccess: props<{ steps: Step[] }>(),
+    fetchByRecipeIdSuccess: props<{ steps: ReadStep[] }>(),
     fetchByRecipeIdFailure: props<{ error: HttpErrorResponse }>(),
   },
 });

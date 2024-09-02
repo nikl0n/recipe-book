@@ -11,8 +11,8 @@ import { Store } from "@ngrx/store";
 import { take } from "rxjs";
 
 import { Category } from "../../api/category.api";
-import { Image } from "../../api/image.api";
-import { Recipe } from "../../api/recipe.api";
+import { ReadImage } from "../../api/image.api";
+import { ReadRecipe } from "../../api/recipe.api";
 import { DialogAreYouSureComponent } from "../../components/dialog-are-you-sure/dialog-are-you-sure.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
@@ -26,9 +26,9 @@ import {
   RecipeSelectStatus,
 } from "../../states/recipe/recipe.reducer";
 
-export type ExtendedRecipe = Recipe & {
+export type ExtendedRecipe = ReadRecipe & {
   category: Category | undefined;
-  images: Image[];
+  images: ReadImage[];
 };
 
 @Component({
@@ -68,7 +68,11 @@ export class RecipeListPage implements OnInit {
       .map((recipe) => ({
         ...recipe,
         category: this.categories().find((category) => category.id === recipe.categoryId),
-        images: this.images().filter((image) => image.recipeId === recipe.id),
+        images: this.images().filter((image) => {
+          if (!image) return false;
+
+          return image.recipeId === recipe.id;
+        }),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 

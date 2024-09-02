@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { CreateRecipe, Recipe } from "../../api/recipe.api";
+import { CreateRecipeExtended, ReadRecipe } from "../../api/recipe.api";
 
 export const RecipeActions = createActionGroup({
   source: "Recipe",
@@ -9,19 +9,19 @@ export const RecipeActions = createActionGroup({
     setLastFetched: props<{ componentName: string }>(),
 
     fetchAll: emptyProps(),
-    fetchAllSuccess: props<{ recipes: Recipe[] }>(),
+    fetchAllSuccess: props<{ recipes: ReadRecipe[] }>(),
     fetchAllFailure: props<{ error: HttpErrorResponse }>(),
 
     fetchById: props<{ recipeId: number }>(),
-    fetchByIdSuccess: props<{ recipe: Recipe }>(),
+    fetchByIdSuccess: props<{ recipe: ReadRecipe }>(),
     fetchByIdFailure: props<{ error: HttpErrorResponse }>(),
 
-    create: props<{ recipe: CreateRecipe }>(),
-    createSuccess: props<{ recipe: Recipe }>(),
+    create: props<{ recipe: CreateRecipeExtended }>(),
+    createSuccess: props<{ recipe: ReadRecipe }>(),
     createFailure: props<{ error: HttpErrorResponse }>(),
 
     delete: props<{ recipeId: number }>(),
-    deleteSuccess: props<{ recipe: Recipe }>(),
+    deleteSuccess: props<{ recipe: ReadRecipe }>(),
     deleteFailure: props<{ error: HttpErrorResponse }>(),
   },
 });

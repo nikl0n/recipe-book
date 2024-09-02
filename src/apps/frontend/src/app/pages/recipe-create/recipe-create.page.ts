@@ -19,7 +19,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { CreateIngredient } from "../../api/ingredients.api";
-import { CreateRecipe } from "../../api/recipe.api";
+import { CreateRecipeExtended } from "../../api/recipe.api";
 import { CreateStep } from "../../api/step.api";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
 import { RecipeActions } from "../../states/recipe/recipe.action";
@@ -148,10 +148,12 @@ export class RecipeCreatePage implements OnInit {
 
     if (!name || !categoryId) return;
 
-    const recipe: CreateRecipe = {
+    const recipe: CreateRecipeExtended = {
       name,
       categoryId,
-      image,
+      image: {
+        base64: image,
+      },
       ingredients,
       steps,
     };

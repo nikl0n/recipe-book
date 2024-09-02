@@ -1,10 +1,10 @@
 import { createFeature, createReducer, on } from "@ngrx/store";
 
-import { Image } from "../../api/image.api";
+import { ReadImage } from "../../api/image.api";
 import { ImageActions } from "./image.action";
 
 interface ImageState {
-  images: Image[];
+  images: ReadImage[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
   lastFetched: string | null;

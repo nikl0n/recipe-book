@@ -3,12 +3,9 @@ import { inject, Injectable } from "@angular/core";
 
 import { environment } from "../../environment/environment";
 
-export type Image = {
-  id: number;
-  recipeId: number;
-  base64: string;
-  timestamp: Date;
-};
+export type ReadImage = { id: number; recipeId: number; base64: string | null; timestamp: Date };
+export type CreateImage = Omit<ReadImage, "id" | "recipeId" | "timestamp">;
+export type UpdateImage = Omit<ReadImage, "timestamp">;
 
 @Injectable({ providedIn: "root" })
 export class ImageApi {
@@ -17,6 +14,6 @@ export class ImageApi {
   private readonly baseUrl = `${environment.api.baseUrl}/api/v1/images`;
 
   fetchMany() {
-    return this.http.get<Image[]>(this.baseUrl);
+    return this.http.get<ReadImage[]>(this.baseUrl);
   }
 }

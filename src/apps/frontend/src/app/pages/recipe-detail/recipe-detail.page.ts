@@ -106,7 +106,11 @@ export class RecipeDetailPage {
 
     return {
       ...recipe,
-      images: this.images().filter((image) => image.recipeId === this.recipe()?.id),
+      images: this.images().filter((image) => {
+        if (!image) return false;
+
+        return image.recipeId === this.recipe()?.id;
+      }),
       ingredients: this.ingredients().map((ingredient) => ({
         ...ingredient,
         unit: this.units().find((unit) => unit.id === ingredient.unitId),

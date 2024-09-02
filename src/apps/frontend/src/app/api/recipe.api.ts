@@ -2,21 +2,18 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
 import { environment } from "../../environment/environment";
-import { Image } from "./image.api";
-import { CreateIngredient, Ingredient } from "./ingredients.api";
-import { CreateStep, Step } from "./step.api";
+import { CreateImage, ReadImage } from "./image.api";
+import { CreateIngredient, ReadIngredient } from "./ingredients.api";
+import { CreateStep, ReadStep } from "./step.api";
 
-export type Recipe = {
-  id: number;
-  categoryId: number;
-  name: string;
-  timestamp: Date;
-};
+export type ReadRecipe = { id: number; categoryId: number; name: string; timestamp: Date };
+export type CreateRecipe = Omit<ReadRecipe, "id" | "timestamp">;
+export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
-export type CreateRecipe = Omit<Recipe, "id" | "timestamp"> & {
-  ingredients: Array<CreateIngredient>;
-  steps: Array<CreateStep>;
-  image: string | null;
+export type CreateRecipeExtended = CreateRecipe & {
+  image: CreateImage;
+  ingredients: CreateIngredient[];
+  steps: CreateStep[];
 };
 
 @Injectable({ providedIn: "root" })
@@ -26,32 +23,32 @@ export class RecipeApi {
   private readonly baseUrl = `${environment.api.baseUrl}/api/v1/recipes`;
 
   fetchMany() {
-    return this.http.get<Recipe[]>(this.baseUrl);
+    return this.http.get<ReadRecipe[]>(this.baseUrl);
   }
 
   fetchById(recipeId: number) {
-    return this.http.get<Recipe>(`${this.baseUrl}/${recipeId}`);
+    return this.http.get<ReadRecipe>(`${this.baseUrl}/${recipeId}`);
   }
 
-  create(recipe: CreateRecipe) {
-    return this.http.post<Recipe>(`${this.baseUrl}`, recipe);
+  create(recipe: CreateRecipeExtended) {
+    return this.http.post<ReadRecipe>(`${this.baseUrl}`, recipe);
   }
 
   delete(recipeId: number) {
-    return this.http.delete<Recipe>(`${this.baseUrl}/${recipeId}`);
+    return this.http.delete<ReadRecipe>(`${this.baseUrl}/${recipeId}`);
   }
 
   // ------
 
   fetchManyIngredientsByRecipeId(recipeId: number) {
-    return this.http.get<Ingredient[]>(`${this.baseUrl}/${recipeId}/ingredients`);
+    return this.http.get<ReadIngredient[]>(`${this.baseUrl}/${recipeId}/ingredients`);
   }
 
   fetchManyImagesByRecipeId(recipeId: number) {
-    return this.http.get<Image[]>(`${this.baseUrl}/${recipeId}/images`);
+    return this.http.get<ReadImage[]>(`${this.baseUrl}/${recipeId}/images`);
   }
 
   fetchManyStepsByRecipeId(recipeId: number) {
-    return this.http.get<Step[]>(`${this.baseUrl}/${recipeId}/steps`);
+    return this.http.get<ReadStep[]>(`${this.baseUrl}/${recipeId}/steps`);
   }
 }

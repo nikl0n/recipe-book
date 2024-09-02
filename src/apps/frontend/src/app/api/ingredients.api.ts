@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-export type Ingredient = {
+export type ReadIngredient = {
   id: number;
   recipeId: number;
   unitId: number;
@@ -8,8 +8,8 @@ export type Ingredient = {
   amount: number;
   timestamp: Date;
 };
-
-export type CreateIngredient = Omit<Ingredient, "id" | "timestamp" | "recipeId">;
+export type CreateIngredient = Omit<ReadIngredient, "id" | "recipeId" | "timestamp">;
+export type UpdateIngredient = Omit<ReadIngredient, "timestamp">;
 
 @Injectable({ providedIn: "root" })
 export class IngredientsApi {

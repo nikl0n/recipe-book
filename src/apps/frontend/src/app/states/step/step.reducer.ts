@@ -1,10 +1,10 @@
 import { createFeature, createReducer, on } from "@ngrx/store";
 
-import { Step } from "../../api/step.api";
+import { ReadStep } from "../../api/step.api";
 import { StepActions } from "./step.action";
 
 interface StepState {
-  steps: Step[];
+  steps: ReadStep[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
   lastFetched: string | null;

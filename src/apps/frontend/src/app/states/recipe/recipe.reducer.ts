@@ -1,10 +1,10 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { Recipe } from "../../api/recipe.api";
+import { ReadRecipe } from "../../api/recipe.api";
 import { RecipeActions } from "./recipe.action";
 
 interface RecipeState {
-  recipes: Recipe[];
+  recipes: ReadRecipe[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
   lastFetched: string | null;
