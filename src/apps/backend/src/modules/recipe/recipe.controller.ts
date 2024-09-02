@@ -9,6 +9,7 @@ import {
   Post,
 } from "@nestjs/common";
 
+import { CreateImage } from "../image/image.controller";
 import { ImageService } from "../image/image.service";
 import { CreateIngredient } from "../ingredient/ingredient.controller";
 import { IngredientService } from "../ingredient/ingredient.service";
@@ -16,7 +17,9 @@ import { CreateStep } from "../step/step.controller";
 import { StepService } from "../step/step.service";
 import { RecipeService } from "./recipe.service";
 
-export type CreateRecipe = { name: string; categoryId: number };
+export type ReadRecipe = { id: number; categoryId: number; name: string; timestamp: Date };
+export type CreateRecipe = Omit<ReadRecipe, "id" | "timestamp">;
+export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 @Controller("api/v1/recipes")
 export class RecipeController {
@@ -43,7 +46,19 @@ export class RecipeController {
     recipe: CreateRecipe & {
       ingredients: CreateIngredient[];
       steps: CreateStep[];
-      image: string;
+      image: CreateImage;
+    }
+  ) {
+    return this.recipeService.create(recipe);
+  }
+
+  @Post()
+  async update(
+    @Body()
+    recipe: CreateRecipe & {
+      ingredients: CreateIngredient[];
+      steps: CreateStep[];
+      image: CreateImage;
     }
   ) {
     return this.recipeService.create(recipe);
