@@ -11,15 +11,15 @@
   - [x] recipe component
   - [x] filter recipes
   - [ ] search recipes
+  - [ ] print recipe action to save as pdf
+  - [ ] pagination
 - [ ] recipe-detail page (WIP)
-  - [ ] action buttons
   - [x] ingredients
   - [x] steps
-- [x] add new recipe
-- [ ] print recipe, to save as pdf
-- [ ] edit recipe
-- [ ] pagination
-- [ ] rights to delete, create and edit a recipe
+  - [x] ingredients with checkboxes to cross font
+  - [ ] action buttons
+- [x] recipe-create page
+- [x] recipe-edit page
+- [ ] rights to create, update and delete a recipe
   - [ ] user table with jwt?
 - [ ] packages/types
-- [x] recipe-detail ingredients with checkboxes to cross font
