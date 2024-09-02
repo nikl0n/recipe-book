@@ -7,6 +7,7 @@ import { provideState, provideStore } from "@ngrx/store";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 import { provideHttpClient, withFetch } from "@angular/common/http";
+import { environment } from "../environment/environment";
 import { routes } from "./app.routes";
 import { CategoryEffect } from "./states/category/category.effect";
 import { categoryFeature } from "./states/category/category.reducer";
@@ -31,6 +32,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
 
     provideStore(),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
 
     provideEffects(RecipeEffect),
     provideState(recipeFeature),
