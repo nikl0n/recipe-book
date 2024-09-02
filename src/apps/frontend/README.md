@@ -12,6 +12,11 @@
   - [x] filter recipes
   - [ ] search recipes
 - [ ] recipe-detail page (WIP)
-- [ ] ingredients
-- [ ] add new recipe
+  - [ ] action buttons
+  - [x] ingredients
+  - [x] steps
+- [x] add new recipe
 - [ ] edit recipe
+- [ ] pagination
+- [ ] rights to delete, create and edit a recipe
+  - [ ] user table with jwt?
