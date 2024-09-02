@@ -37,8 +37,11 @@ export class RecipeController {
   }
 
   @Get(":id")
-  findUnique(@Param("id", ParseIntPipe) recipeId: number) {
-    return this.recipeService.findUnique(recipeId);
+  async findUnique(@Param("id", ParseIntPipe) recipeId: number) {
+    const recipe = await this.recipeService.findUnique(recipeId);
+    if (!recipe) throw new NotFoundException(`no recipe found with id ${recipeId}`);
+
+    return recipe;
   }
 
   @Post()
