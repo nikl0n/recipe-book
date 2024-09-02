@@ -4,6 +4,8 @@ import { ActivatedRoute } from "@angular/router";
 
 import { Store } from "@ngrx/store";
 
+import { MatCheckboxModule } from "@angular/material/checkbox";
+
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { CategorySelectCategoryById } from "../../states/category/category.reducer";
 import { ImageActions } from "../../states/image/image.action";
@@ -26,7 +28,7 @@ import { UnitSelectUnits } from "../../states/unit/unit.reducer";
 @Component({
   selector: "app-recipe-detail",
   standalone: true,
-  imports: [LoadingComponent, CommonModule],
+  imports: [LoadingComponent, CommonModule, MatCheckboxModule],
   templateUrl: "./recipe-detail.page.html",
   styleUrl: "./recipe-detail.page.scss",
 })
@@ -35,6 +37,8 @@ export class RecipeDetailPage {
   store = inject(Store);
 
   paramRecipeId = Number(this.activatedRoute.snapshot.paramMap.get("id"));
+
+  checkedIngredients: Set<number> = new Set();
 
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipe = this.store.selectSignal(RecipeSelectRecipeById(this.paramRecipeId));
@@ -118,4 +122,18 @@ export class RecipeDetailPage {
       steps: this.steps(),
     };
   });
+
+  toggleIngredient(index: number) {
+    if (this.checkedIngredients.has(index)) {
+      this.checkedIngredients.delete(index);
+
+      return;
+    }
+
+    this.checkedIngredients.add(index);
+  }
+
+  isCheckedIngredient(index: number) {
+    return this.checkedIngredients.has(index);
+  }
 }

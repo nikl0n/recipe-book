@@ -15,13 +15,25 @@
           <h1 style="margin-bottom: 10px">{{ recipe.name }}</h1>
 
           @if (recipe.ingredients && recipe.ingredients.length > 0) {
-            <h3 style="margin-bottom: 5px">Zutaten</h3>
-
             @for (ingredient of recipe.ingredients; track $index) {
-              <div style="display: flex">
-                <div>{{ ingredient.amount }}</div>
-                <div style="margin-right: 5px">{{ ingredient.unit?.name }}</div>
-                <div>{{ ingredient.name }}</div>
+              <div>
+                <mat-checkbox
+                  (change)="toggleIngredient($index)"
+                  [checked]="isCheckedIngredient($index)">
+                  <div style="display: flex; align-items: center">
+                    <div
+                      [style.text-decoration]="
+                        isCheckedIngredient($index) ? 'line-through' : 'none'
+                      "
+                      style="display: flex; align-items: center">
+                      <div style="margin-right: 1px">{{ ingredient.amount }}</div>
+                      <div style="margin-right: 5px">
+                        {{ ingredient.unit?.name }}
+                      </div>
+                      <div>{{ ingredient.name }}</div>
+                    </div>
+                  </div>
+                </mat-checkbox>
               </div>
             }
           } @else {
