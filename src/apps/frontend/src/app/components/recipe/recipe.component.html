@@ -10,7 +10,7 @@
     <button mat-icon-button>
       <mat-icon>print</mat-icon>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="$event.stopPropagation(); onClickEditRecipe.emit(recipe().id)">
       <mat-icon>edit</mat-icon>
     </button>
     <button

@@ -16,6 +16,8 @@ export type CreateRecipeExtended = CreateRecipe & {
   steps: CreateStep[];
 };
 
+export type UpdateRecipeExtended = CreateRecipeExtended & { id: number };
+
 @Injectable({ providedIn: "root" })
 export class RecipeApi {
   private readonly http = inject(HttpClient);
@@ -36,6 +38,10 @@ export class RecipeApi {
 
   delete(recipeId: number) {
     return this.http.delete<ReadRecipe>(`${this.baseUrl}/${recipeId}`);
+  }
+
+  update(recipe: UpdateRecipeExtended) {
+    return this.http.put<ReadRecipe>(`${this.baseUrl}/${recipe.id}`, recipe);
   }
 
   // ------

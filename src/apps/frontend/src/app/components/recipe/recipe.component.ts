@@ -15,6 +15,7 @@ import { ExtendedRecipe } from "../../pages/recipe-list/recipe-list.page";
 })
 export class RecipeComponent {
   onClickDeleteRecipe = output<number>();
+  onClickEditRecipe = output<number>();
   onClickRecipe = output<number>();
 
   recipe = input.required<ExtendedRecipe>();

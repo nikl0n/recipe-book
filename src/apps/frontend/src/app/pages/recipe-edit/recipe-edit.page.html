@@ -1,0 +1,5 @@
+@if (isLoading()) {
+  <app-loading></app-loading>
+} @else {
+  <app-recipe-upsert action="edit" (onEditRecipe)="onEditRecipe($event)"></app-recipe-upsert>
+}

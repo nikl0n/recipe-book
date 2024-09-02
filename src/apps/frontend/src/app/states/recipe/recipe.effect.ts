@@ -59,4 +59,16 @@ export class RecipeEffect {
       )
     )
   );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecipeActions.update),
+      switchMap(({ recipe }) =>
+        this.recipeApi.update(recipe).pipe(
+          map((recipe) => RecipeActions.updateSuccess({ recipe })),
+          catchError((error: HttpErrorResponse) => of(RecipeActions.updateFailure({ error })))
+        )
+      )
+    )
+  );
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, inject, OnInit, signal } from "@angular/core";
+import { Component, computed, effect, inject, signal } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { MatButtonModule } from "@angular/material/button";
@@ -18,7 +18,11 @@ import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
 import { ImageActions } from "../../states/image/image.action";
-import { ImageSelectImages, ImageSelectStatus } from "../../states/image/image.reducer";
+import {
+  ImageSelectImages,
+  ImageSelectLastFetched,
+  ImageSelectStatus,
+} from "../../states/image/image.reducer";
 import { RecipeActions } from "../../states/recipe/recipe.action";
 import {
   RecipeSelectLastFetched,
@@ -47,7 +51,7 @@ export type ExtendedRecipe = ReadRecipe & {
   templateUrl: "./recipe-list.page.html",
   styleUrl: "./recipe-list.page.scss",
 })
-export class RecipeListPage implements OnInit {
+export class RecipeListPage {
   store = inject(Store);
   router = inject(Router);
   dialog = inject(MatDialog);
@@ -58,6 +62,7 @@ export class RecipeListPage implements OnInit {
 
   imageStatus = this.store.selectSignal(ImageSelectStatus);
   images = this.store.selectSignal(ImageSelectImages);
+  imageLastFetched = this.store.selectSignal(ImageSelectLastFetched);
 
   categories = this.store.selectSignal(CategorySelectCategories);
 
@@ -87,15 +92,20 @@ export class RecipeListPage implements OnInit {
     return [this.recipeStatus(), this.imageStatus()].some((status) => status === "LOADING");
   });
 
-  ngOnInit(): void {
-    if (this.recipeLastFetched() === "recipe-list") return;
+  fetchResources = effect(
+    () => {
+      if (this.recipeLastFetched() !== "recipe-list") {
+        this.store.dispatch(RecipeActions.fetchAll());
+        this.store.dispatch(RecipeActions.setLastFetched({ componentName: "recipe-list" }));
+      }
 
-    this.store.dispatch(RecipeActions.fetchAll());
-    this.store.dispatch(RecipeActions.setLastFetched({ componentName: "recipe-list" }));
-
-    this.store.dispatch(ImageActions.fetchMany());
-    this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-list" }));
-  }
+      if (this.imageLastFetched() !== "recipe-list") {
+        this.store.dispatch(ImageActions.fetchMany());
+        this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-list" }));
+      }
+    },
+    { allowSignalWrites: true }
+  );
 
   onClickChipCategory(event: MatChipListboxChange) {
     const categoryId = event.value as Category["id"];
@@ -111,6 +121,10 @@ export class RecipeListPage implements OnInit {
 
   onClickRecipe(id: number) {
     this.router.navigateByUrl(`recipes/${id}`);
+  }
+
+  onClickEditRecipe(id: number) {
+    this.router.navigateByUrl(`recipes/${id}/edit`);
   }
 
   onClickDeleteRecipe(recipeId: number) {

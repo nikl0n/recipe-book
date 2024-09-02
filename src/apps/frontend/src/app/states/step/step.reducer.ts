@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
 import { ReadStep } from "../../api/step.api";
 import { StepActions } from "./step.action";
@@ -44,6 +44,12 @@ export const stepFeature = createFeature({
       steps: [],
     }))
   ),
+  extraSelectors: ({ selectSteps }) => {
+    const selectStepsByRecipeId = (recipeId: number | undefined) =>
+      createSelector(selectSteps, (steps) => steps.filter((step) => step.recipeId === recipeId));
+
+    return { selectStepsByRecipeId };
+  },
 });
 
 export const {
@@ -52,4 +58,5 @@ export const {
   selectSteps: StepSelectSteps,
   selectStatus: StepSelectStatus,
   selectStatusAction: StepSelectStatusAction,
+  selectStepsByRecipeId: StepSelectStepsByRecipeId,
 } = stepFeature;

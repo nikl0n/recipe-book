@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
 import { ReadImage } from "../../api/image.api";
 import { ImageActions } from "./image.action";
@@ -44,6 +44,12 @@ export const imageFeature = createFeature({
       images: [],
     }))
   ),
+  extraSelectors: ({ selectImages }) => {
+    const selectImageByRecipeId = (recipeId: number | undefined) =>
+      createSelector(selectImages, (images) => images.find((image) => image.recipeId === recipeId));
+
+    return { selectImageByRecipeId };
+  },
 });
 
 export const {
@@ -52,4 +58,6 @@ export const {
   selectImages: ImageSelectImages,
   selectStatus: ImageSelectStatus,
   selectStatusAction: ImageSelectStatusAction,
+  selectLastFetched: ImageSelectLastFetched,
+  selectImageByRecipeId: ImageSelectImageByRecipeId,
 } = imageFeature;

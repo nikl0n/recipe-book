@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
 import { ReadIngredient } from "../../api/ingredients.api";
 import { IngredientActions } from "./ingredient.action";
@@ -44,6 +44,14 @@ export const ingredientFeature = createFeature({
       ingredients: [],
     }))
   ),
+  extraSelectors: ({ selectIngredients }) => {
+    const selectIngredientsByRecipeId = (recipeId: number | undefined) =>
+      createSelector(selectIngredients, (ingredients) =>
+        ingredients.filter((ingredient) => ingredient.recipeId === recipeId)
+      );
+
+    return { selectIngredientsByRecipeId };
+  },
 });
 
 export const {
@@ -52,4 +60,5 @@ export const {
   selectIngredients: IngredientSelectIngredients,
   selectStatus: IngredientSelectStatus,
   selectStatusAction: IngredientSelectStatusAction,
+  selectIngredientsByRecipeId: IngredientSelectIngredientsByRecipeId,
 } = ingredientFeature;

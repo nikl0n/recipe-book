@@ -62,6 +62,12 @@ export const recipeFeature = createFeature({
       statusAction: "CREATE" as const,
     })),
 
+    on(RecipeActions.update, (state) => ({
+      ...state,
+      status: "LOADING" as const,
+      statusAction: "UPDATE" as const,
+    })),
+
     on(RecipeActions.delete, (state) => ({
       ...state,
       status: "LOADING" as const,
@@ -74,11 +80,22 @@ export const recipeFeature = createFeature({
       status: "SUCCESS" as const,
     })),
 
+    on(RecipeActions.updateSuccess, (state, { recipe }) => ({
+      ...state,
+      recipes: state.recipes.map((stateRecipe) => {
+        if (stateRecipe.id === recipe.id) return recipe;
+
+        return stateRecipe;
+      }),
+      status: "SUCCESS" as const,
+    })),
+
     on(
       RecipeActions.fetchAllFailure,
       RecipeActions.fetchByIdFailure,
       RecipeActions.createFailure,
       RecipeActions.deleteFailure,
+      RecipeActions.updateFailure,
       (state) => ({
         ...state,
         status: "ERROR" as const,
