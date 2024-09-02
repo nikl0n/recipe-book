@@ -69,7 +69,7 @@
       <div formArrayName="steps">
         @for (step of form.controls["steps"].controls; track step; let i = $index) {
           <div [formGroupName]="i" style="display: flex; gap: 10px">
-            <mat-form-field>
+            <mat-form-field style="min-width: 500px">
               <mat-label>Schritt {{ i + 1 }}</mat-label>
               <textarea matInput formControlName="text"></textarea>
             </mat-form-field>
