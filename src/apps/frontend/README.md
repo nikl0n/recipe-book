@@ -16,6 +16,7 @@
   - [x] ingredients
   - [x] steps
 - [x] add new recipe
+- [ ] print recipe, to save as pdf
 - [ ] edit recipe
 - [ ] pagination
 - [ ] rights to delete, create and edit a recipe
