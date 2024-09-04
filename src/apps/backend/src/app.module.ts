@@ -8,9 +8,18 @@ import { IngredientModule } from "./modules/ingredient/ingredient.module";
 import { RecipeModule } from "./modules/recipe/recipe.module";
 import { StepModule } from "./modules/step/step.module";
 import { UnitModule } from "./modules/unit/unit.module";
+import { UserModule } from "./modules/user/user.module";
 
 @Module({
-  imports: [CategoryModule, ImageModule, IngredientModule, RecipeModule, StepModule, UnitModule],
+  imports: [
+    CategoryModule,
+    ImageModule,
+    IngredientModule,
+    RecipeModule,
+    StepModule,
+    UnitModule,
+    UserModule,
+  ],
   controllers: [],
   providers: [],
 })

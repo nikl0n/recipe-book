@@ -39,15 +39,18 @@ model ingredients {
 
 model recipes {
   id          Int           @id @default(autoincrement())
+  userId      Int
   categoryId  Int
   name        String        @db.VarChar(255)
   timestamp   DateTime      @db.DateTime(0)
   images      images[]
   ingredients ingredients[]
   categories  categories    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recipes_ibfk_1")
+  user        user          @relation(fields: [userId], references: [id], onDelete: Cascade, map: "recipes_ibfk_2")
   steps       steps[]
 
   @@index([categoryId], map: "category_id")
+  @@index([userId], map: "userId")
 }
 
 model steps {
@@ -65,4 +68,13 @@ model units {
   id          Int           @id @default(autoincrement())
   name        String        @db.VarChar(255)
   ingredients ingredients[]
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique(map: "username") @db.VarChar(50)
+  password  String    @db.VarChar(500)
+  token     String?   @unique(map: "token") @db.VarChar(500)
+  timestamp DateTime  @db.DateTime(0)
+  recipes   recipes[]
 }

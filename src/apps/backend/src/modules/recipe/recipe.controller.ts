@@ -19,7 +19,13 @@ import { CreateStep } from "../step/step.controller";
 import { StepService } from "../step/step.service";
 import { RecipeService } from "./recipe.service";
 
-export type ReadRecipe = { id: number; categoryId: number; name: string; timestamp: Date };
+export type ReadRecipe = {
+  id: number;
+  userId: number;
+  categoryId: number;
+  name: string;
+  timestamp: Date;
+};
 export type CreateRecipe = Omit<ReadRecipe, "id" | "timestamp">;
 export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
