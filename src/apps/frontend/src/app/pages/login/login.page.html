@@ -1,0 +1,15 @@
+<section id="login" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Benutzername</mat-label>
+    <input matInput formControlName="username" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Passwort</mat-label>
+    <input type="password" matInput formControlName="password" />
+  </mat-form-field>
+
+  <button type="button" mat-flat-button [disabled]="form.invalid || isFetching()" (click)="login()">
+    Anmelden
+  </button>
+</section>
