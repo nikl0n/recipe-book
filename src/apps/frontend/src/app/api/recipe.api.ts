@@ -6,7 +6,13 @@ import { CreateImage, ReadImage } from "./image.api";
 import { CreateIngredient, ReadIngredient } from "./ingredients.api";
 import { CreateStep, ReadStep } from "./step.api";
 
-export type ReadRecipe = { id: number; categoryId: number; name: string; timestamp: Date };
+export type ReadRecipe = {
+  id: number;
+  userId: number;
+  categoryId: number;
+  name: string;
+  timestamp: Date;
+};
 export type CreateRecipe = Omit<ReadRecipe, "id" | "timestamp">;
 export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
