@@ -1,7 +1,8 @@
-import { Logger, Module, OnModuleInit } from "@nestjs/common";
+import { Logger, MiddlewareConsumer, Module, NestModule, OnModuleInit } from "@nestjs/common";
 
 import { PrismaClient } from "@prisma/client";
 
+import { LoggerMiddleware } from "./middlewares/logger.middleware";
 import { CategoryModule } from "./modules/category/category.module";
 import { ImageModule } from "./modules/image/image.module";
 import { IngredientModule } from "./modules/ingredient/ingredient.module";
@@ -23,9 +24,13 @@ import { UserModule } from "./modules/user/user.module";
   controllers: [],
   providers: [],
 })
-export class AppModule implements OnModuleInit {
+export class AppModule implements OnModuleInit, NestModule {
   prisma = new PrismaClient();
   logger = new Logger(AppModule.name);
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes("*");
+  }
 
   async onModuleInit() {
     try {
