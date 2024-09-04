@@ -39,8 +39,8 @@ export class RecipeEffect {
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RecipeActions.create),
-      switchMap(({ recipe }) =>
-        this.recipeApi.create(recipe).pipe(
+      switchMap(({ recipe, token }) =>
+        this.recipeApi.create(recipe, token).pipe(
           map((recipe) => RecipeActions.createSuccess({ recipe })),
           catchError((error: HttpErrorResponse) => of(RecipeActions.createFailure({ error })))
         )
@@ -51,8 +51,8 @@ export class RecipeEffect {
   delete$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RecipeActions.delete),
-      switchMap(({ recipeId }) =>
-        this.recipeApi.delete(recipeId).pipe(
+      switchMap(({ recipeId, token }) =>
+        this.recipeApi.delete(recipeId, token).pipe(
           map((recipe) => RecipeActions.deleteSuccess({ recipe })),
           catchError((error: HttpErrorResponse) => of(RecipeActions.deleteFailure({ error })))
         )
@@ -63,8 +63,8 @@ export class RecipeEffect {
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RecipeActions.update),
-      switchMap(({ recipe }) =>
-        this.recipeApi.update(recipe).pipe(
+      switchMap(({ recipe, token }) =>
+        this.recipeApi.update(recipe, token).pipe(
           map((recipe) => RecipeActions.updateSuccess({ recipe })),
           catchError((error: HttpErrorResponse) => of(RecipeActions.updateFailure({ error })))
         )

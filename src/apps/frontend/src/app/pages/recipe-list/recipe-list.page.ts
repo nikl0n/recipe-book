@@ -29,6 +29,7 @@ import {
   RecipeSelectRecipes,
   RecipeSelectStatus,
 } from "../../states/recipe/recipe.reducer";
+import { UserSelectUser } from "../../states/user/user.reducer";
 
 export type ExtendedRecipe = ReadRecipe & {
   category: Category | undefined;
@@ -55,6 +56,8 @@ export class RecipeListPage {
   store = inject(Store);
   router = inject(Router);
   dialog = inject(MatDialog);
+
+  user = this.store.selectSignal(UserSelectUser);
 
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipes = this.store.selectSignal(RecipeSelectRecipes);
@@ -128,6 +131,9 @@ export class RecipeListPage {
   }
 
   onClickDeleteRecipe(recipeId: number) {
+    const token = this.user()?.token;
+    if (!token) return;
+
     const dialogRef = this.dialog.open(DialogAreYouSureComponent, {
       data: "Möchtest du das Rezept wirklich löschen?",
     });
@@ -138,7 +144,7 @@ export class RecipeListPage {
       .subscribe((result: boolean) => {
         if (!result) return;
 
-        this.store.dispatch(RecipeActions.delete({ recipeId }));
+        this.store.dispatch(RecipeActions.delete({ recipeId, token }));
       });
   }
 

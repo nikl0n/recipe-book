@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import { CreateRecipeExtended } from "../../api/recipe.api";
 import { RecipeUpsertComponent } from "../../components/recipe-upsert/recipe-upsert.component";
 import { RecipeActions } from "../../states/recipe/recipe.action";
+import { UserSelectUser } from "../../states/user/user.reducer";
 
 @Component({
   selector: "app-recipe-create",
@@ -15,7 +16,12 @@ import { RecipeActions } from "../../states/recipe/recipe.action";
 export class RecipeCreatePage {
   store = inject(Store);
 
+  user = this.store.selectSignal(UserSelectUser);
+
   onCreateRecipe(recipe: CreateRecipeExtended) {
-    this.store.dispatch(RecipeActions.create({ recipe }));
+    const token = this.user()?.token;
+    if (!token) return;
+
+    this.store.dispatch(RecipeActions.create({ recipe, token }));
   }
 }

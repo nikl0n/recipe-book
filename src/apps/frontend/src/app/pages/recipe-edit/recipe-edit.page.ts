@@ -17,6 +17,7 @@ import {
 } from "../../states/recipe/recipe.reducer";
 import { StepActions } from "../../states/step/step.action";
 import { StepSelectStatus } from "../../states/step/step.reducer";
+import { UserSelectUser } from "../../states/user/user.reducer";
 
 @Component({
   selector: "app-recipe-list",
@@ -30,6 +31,8 @@ export class RecipeEditPage {
   store = inject(Store);
 
   paramRecipeId = Number(this.activatedRoute.snapshot.paramMap.get("id"));
+
+  user = this.store.selectSignal(UserSelectUser);
 
   recipeStatus = this.store.selectSignal(RecipeSelectStatus);
   recipeStatusAction = this.store.selectSignal(RecipeSelectStatusAction);
@@ -108,6 +111,9 @@ export class RecipeEditPage {
   );
 
   onEditRecipe(recipe: UpdateRecipeExtended) {
-    this.store.dispatch(RecipeActions.update({ recipe }));
+    const token = this.user()?.token;
+    if (!token) return;
+
+    this.store.dispatch(RecipeActions.update({ recipe, token }));
   }
 }

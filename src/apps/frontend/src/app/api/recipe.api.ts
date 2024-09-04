@@ -13,7 +13,7 @@ export type ReadRecipe = {
   name: string;
   timestamp: Date;
 };
-export type CreateRecipe = Omit<ReadRecipe, "id" | "timestamp">;
+export type CreateRecipe = Omit<ReadRecipe, "id" | "userId" | "timestamp">;
 export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 export type CreateRecipeExtended = CreateRecipe & {
@@ -38,16 +38,28 @@ export class RecipeApi {
     return this.http.get<ReadRecipe>(`${this.baseUrl}/${recipeId}`);
   }
 
-  create(recipe: CreateRecipeExtended) {
-    return this.http.post<ReadRecipe>(`${this.baseUrl}`, recipe);
+  create(recipe: CreateRecipeExtended, token: string) {
+    return this.http.post<ReadRecipe>(`${this.baseUrl}`, recipe, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
   }
 
-  delete(recipeId: number) {
-    return this.http.delete<ReadRecipe>(`${this.baseUrl}/${recipeId}`);
+  delete(recipeId: number, token: string) {
+    return this.http.delete<ReadRecipe>(`${this.baseUrl}/${recipeId}`, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
   }
 
-  update(recipe: UpdateRecipeExtended) {
-    return this.http.put<ReadRecipe>(`${this.baseUrl}/${recipe.id}`, recipe);
+  update(recipe: UpdateRecipeExtended, token: string) {
+    return this.http.put<ReadRecipe>(`${this.baseUrl}/${recipe.id}`, recipe, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
   }
 
   // ------

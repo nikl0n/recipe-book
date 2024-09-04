@@ -16,15 +16,15 @@ export const RecipeActions = createActionGroup({
     fetchByIdSuccess: props<{ recipe: ReadRecipe }>(),
     fetchByIdFailure: props<{ error: HttpErrorResponse }>(),
 
-    create: props<{ recipe: CreateRecipeExtended }>(),
+    create: props<{ recipe: CreateRecipeExtended; token: string }>(),
     createSuccess: props<{ recipe: ReadRecipe }>(),
     createFailure: props<{ error: HttpErrorResponse }>(),
 
-    delete: props<{ recipeId: number }>(),
+    delete: props<{ recipeId: number; token: string }>(),
     deleteSuccess: props<{ recipe: ReadRecipe }>(),
     deleteFailure: props<{ error: HttpErrorResponse }>(),
 
-    update: props<{ recipe: UpdateRecipeExtended }>(),
+    update: props<{ recipe: UpdateRecipeExtended; token: string }>(),
     updateSuccess: props<{ recipe: ReadRecipe }>(),
     updateFailure: props<{ error: HttpErrorResponse }>(),
   },
