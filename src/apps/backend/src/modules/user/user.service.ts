@@ -29,6 +29,14 @@ export class UserService {
     });
   }
 
+  findByToken(token: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        token,
+      },
+    });
+  }
+
   create(username: string, password: string, token: string) {
     return this.prisma.user.create({
       data: {

@@ -4,7 +4,7 @@ import { randomBytes } from "node:crypto";
 
 import { UserService } from "./user.service";
 
-type ReadUser = { id: number; username: string; token: string };
+export type ReadUser = { id: number; username: string; token: string };
 type CreateUser = Omit<ReadUser, "id" | "token"> & { password: string };
 
 @Controller("api/v1/users")
