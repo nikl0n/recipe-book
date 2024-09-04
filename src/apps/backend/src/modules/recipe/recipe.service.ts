@@ -40,7 +40,8 @@ export class RecipeService {
       ingredients: CreateIngredient[];
       steps: CreateStep[];
       image: CreateImage;
-    }
+    },
+    userId: number
   ) {
     const timestamp = new Date();
 
@@ -48,6 +49,7 @@ export class RecipeService {
       const newRecipe = await tx.recipes.create({
         data: {
           name: recipe.name,
+          userId,
           categoryId: recipe.categoryId,
           timestamp,
         },

@@ -9,14 +9,20 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Req,
+  UseGuards,
 } from "@nestjs/common";
 
+import { Request } from "express";
+
+import { TokenAuthGuard } from "src/guards/token.guard";
 import { CreateImage } from "../image/image.controller";
 import { ImageService } from "../image/image.service";
 import { CreateIngredient } from "../ingredient/ingredient.controller";
 import { IngredientService } from "../ingredient/ingredient.service";
 import { CreateStep } from "../step/step.controller";
 import { StepService } from "../step/step.service";
+import { ReadUser } from "../user/user.controller";
 import { RecipeService } from "./recipe.service";
 
 export type ReadRecipe = {
@@ -26,7 +32,7 @@ export type ReadRecipe = {
   name: string;
   timestamp: Date;
 };
-export type CreateRecipe = Omit<ReadRecipe, "id" | "timestamp">;
+export type CreateRecipe = Omit<ReadRecipe, "id" | "userId" | "timestamp">;
 export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 @Controller("api/v1/recipes")
@@ -52,18 +58,21 @@ export class RecipeController {
   }
 
   @Post()
+  @UseGuards(TokenAuthGuard)
   async create(
     @Body()
     recipe: CreateRecipe & {
       ingredients: CreateIngredient[];
       steps: CreateStep[];
       image: CreateImage;
-    }
+    },
+    @Req() request: Request & { user: ReadUser }
   ) {
-    return this.recipeService.create(recipe);
+    return this.recipeService.create(recipe, request.user.id);
   }
 
   @Put(":id")
+  @UseGuards(TokenAuthGuard)
   async update(
     @Param("id", ParseIntPipe) recipeId: number,
     @Body()
@@ -81,6 +90,7 @@ export class RecipeController {
   }
 
   @Delete(":id")
+  @UseGuards(TokenAuthGuard)
   async delete(@Param("id", ParseIntPipe) recipeId: number) {
     const recipe = await this.recipeService.findById(recipeId);
     if (!recipe) throw new NotFoundException(`no recipe found with id ${recipeId}`);
