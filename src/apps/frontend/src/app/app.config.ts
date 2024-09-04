@@ -21,6 +21,8 @@ import { StepEffect } from "./states/step/step.effect";
 import { stepFeature } from "./states/step/step.reducer";
 import { UnitEffect } from "./states/unit/unit.effect";
 import { unitFeature } from "./states/unit/unit.reducer";
+import { UserEffect } from "./states/user/user.effect";
+import { userFeature } from "./states/user/user.reducer";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -55,6 +57,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects(UnitEffect),
     provideState(unitFeature),
 
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideEffects(UserEffect),
+    provideState(userFeature),
   ],
 };
