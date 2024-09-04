@@ -14,6 +14,7 @@
       @if (recipe.category) {
         <app-recipe
           [recipe]="recipe"
+          [user]="user()"
           (onClickRecipe)="onClickRecipe($event)"
           (onClickEditRecipe)="onClickEditRecipe($event)"
           (onClickDeleteRecipe)="onClickDeleteRecipe($event)"></app-recipe>
@@ -21,9 +22,11 @@
     }
   </section>
 
-  <section id="create-recipe">
-    <button mat-fab aria-label="Erstellen" (click)="onClickCreateRecipe()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </section>
+  @if (user()) {
+    <section id="create-recipe">
+      <button mat-fab aria-label="Erstellen" (click)="onClickCreateRecipe()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </section>
+  }
 }
