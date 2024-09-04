@@ -4,6 +4,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 
+import { ReadUser } from "../../api/user.api";
 import { ExtendedRecipe } from "../../pages/recipe-list/recipe-list.page";
 
 @Component({
@@ -18,5 +19,6 @@ export class RecipeComponent {
   onClickEditRecipe = output<number>();
   onClickRecipe = output<number>();
 
+  user = input<ReadUser | null>();
   recipe = input.required<ExtendedRecipe>();
 }
