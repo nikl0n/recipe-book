@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "prod": "node dist/main",
+    "prod": "node dist/src/main",
     "dev": "dotenv -e env/.env -c development -- nest start",
     "dev:watch": "dotenv -e env/.env -c development -- nest start --watch",
     "prisma:pull": "dotenv -e env/.env -c development -- pnpm exec prisma db pull",
