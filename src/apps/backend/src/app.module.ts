@@ -1,4 +1,5 @@
 import { Logger, MiddlewareConsumer, Module, NestModule, OnModuleInit } from "@nestjs/common";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -20,9 +21,20 @@ import { UserModule } from "./modules/user/user.module";
     StepModule,
     UnitModule,
     UserModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 30,
+      },
+    ]),
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: "APP_GUARD",
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule implements OnModuleInit, NestModule {
   prisma = new PrismaClient();
