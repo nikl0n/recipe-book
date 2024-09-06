@@ -1,3 +1,49 @@
+# Install
+
+using powershell
+
+```powershell
+Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
+```
+
+install dependencies
+
+```powershell
+pnpm install
+```
+
+generate prisma client
+
+```powershell
+cd src/apps/backend
+pnpm prisma:generate
+```
+
+push model to database
+
+```powershell
+pnpm prisma:push
+```
+
+add required data to database
+
+```powershell
+pnpm prisma:seed
+```
+
+run dev server
+
+```powershell
+pnpm dev
+```
+
+run frontend server
+
+```powershell
+cd src/apps/frontend
+pnpm dev
+```
+
 ## Tasks
 
 ### Frontend
@@ -24,11 +70,14 @@
 - [x] recipe-edit page
 - [ ] show back button
 - [ ] show login/register and logout buttons
+- [ ] add new angular material dark theme
+- [ ] recipe duration
 
 ### Backend
 
 - [x] rights to create, update and delete a recipe
   - [ ] include token with jwt
+- [ ] recipe duration
 
 ### Both
 
