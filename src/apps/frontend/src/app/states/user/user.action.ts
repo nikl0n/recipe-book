@@ -11,5 +11,9 @@ export const UserActions = createActionGroup({
     login: props<{ user: CreateUser }>(),
     loginSuccess: props<{ user: ReadUser }>(),
     loginFailure: props<{ error: HttpErrorResponse }>(),
+
+    register: props<{ user: CreateUser }>(),
+    registerSuccess: props<{ user: ReadUser }>(),
+    registerFailure: props<{ error: HttpErrorResponse }>(),
   },
 });

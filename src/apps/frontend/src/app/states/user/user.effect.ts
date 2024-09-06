@@ -26,4 +26,19 @@ export class UserEffect {
       )
     )
   );
+
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.register),
+      switchMap(({ user }) =>
+        this.userApi.register(user).pipe(
+          map((user) => UserActions.registerSuccess({ user })),
+          tap(({ user }) => {
+            localStorage.setItem("user", JSON.stringify(user));
+          }),
+          catchError((error: HttpErrorResponse) => of(UserActions.registerFailure({ error })))
+        )
+      )
+    )
+  );
 }

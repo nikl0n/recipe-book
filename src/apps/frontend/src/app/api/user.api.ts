@@ -15,4 +15,8 @@ export class UserApi {
   login(user: CreateUser) {
     return this.http.post<ReadUser>(`${this.baseUrl}/login`, user);
   }
+
+  register(user: CreateUser) {
+    return this.http.post<ReadUser>(`${this.baseUrl}/register`, user);
+  }
 }

@@ -24,19 +24,19 @@ export const userFeature = createFeature({
       user,
     })),
 
-    on(UserActions.login, (state) => ({
+    on(UserActions.login, UserActions.register, (state) => ({
       ...state,
       status: "LOADING" as const,
       statusAction: "READ" as const,
     })),
 
-    on(UserActions.loginSuccess, (state, { user }) => ({
+    on(UserActions.loginSuccess, UserActions.registerSuccess, (state, { user }) => ({
       ...state,
       status: "SUCCESS" as const,
       user,
     })),
 
-    on(UserActions.loginFailure, (state) => ({
+    on(UserActions.loginFailure, UserActions.registerFailure, (state) => ({
       ...state,
       status: "ERROR" as const,
       user: null,

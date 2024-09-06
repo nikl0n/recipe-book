@@ -4,11 +4,16 @@ import { RecipeCreatePage } from "./pages/recipe-create/recipe-create.page";
 import { RecipeDetailPage } from "./pages/recipe-detail/recipe-detail.page";
 import { RecipeEditPage } from "./pages/recipe-edit/recipe-edit.page";
 import { RecipeListPage } from "./pages/recipe-list/recipe-list.page";
+import { RegisterPage } from "./pages/register/register.page";
 
 export const routes: Routes = [
   {
     path: "login",
     component: LoginPage,
+  },
+  {
+    path: "register",
+    component: RegisterPage,
   },
 
   {
