@@ -2,3 +2,4 @@
 *.vscode
 *pnpm-lock.yaml
 *.tar
+build-script.bat
