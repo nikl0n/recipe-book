@@ -1,9 +1,4 @@
-export type Environment = {
-  production: boolean;
-  api: {
-    baseUrl: string;
-  };
-};
+import { Environment } from "../main";
 
 export const environment: Environment = {
   production: false,
