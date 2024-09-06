@@ -10,7 +10,7 @@
     <button mat-icon-button>
       <mat-icon>print</mat-icon>
     </button>
-    @if (user()) {
+    @if (user()?.id === recipe().userId) {
       <button
         mat-icon-button
         (click)="$event.stopPropagation(); onClickEditRecipe.emit(recipe().id)">
