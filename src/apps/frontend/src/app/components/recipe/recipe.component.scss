@@ -11,6 +11,10 @@
   span.headline {
     font-size: 20px;
     padding: 10px 10px 0 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   small {
     padding: 0 10px 0 10px;
