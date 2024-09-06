@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Req,
+  UnauthorizedException,
   UseGuards,
 } from "@nestjs/common";
 
@@ -81,19 +82,29 @@ export class RecipeController {
       ingredients: CreateIngredient[];
       steps: CreateStep[];
       image: CreateImage;
-    }
+    },
+    @Req() request: Request & { user: ReadUser }
   ) {
     const recipe = await this.recipeService.findById(recipeId);
     if (!recipe) throw new BadRequestException(`no recipe found with id ${recipeId}`);
+
+    if (recipe.userId !== request.user.id)
+      throw new UnauthorizedException("not allowed to edit recipe");
 
     return this.recipeService.update(bodyRecipe);
   }
 
   @Delete(":id")
   @UseGuards(TokenAuthGuard)
-  async delete(@Param("id", ParseIntPipe) recipeId: number) {
+  async delete(
+    @Param("id", ParseIntPipe) recipeId: number,
+    @Req() request: Request & { user: ReadUser }
+  ) {
     const recipe = await this.recipeService.findById(recipeId);
     if (!recipe) throw new NotFoundException(`no recipe found with id ${recipeId}`);
+
+    if (recipe.userId !== request.user.id)
+      throw new UnauthorizedException("not allowed to delete recipe");
 
     return this.recipeService.delete(recipeId);
   }
