@@ -22,6 +22,12 @@
     }
   </section>
 
+  <section id="menu">
+    <button mat-fab aria-label="Menue" (click)="onClickMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </section>
+
   @if (user()) {
     <section id="create-recipe">
       <button mat-fab aria-label="Erstellen" (click)="onClickCreateRecipe()">

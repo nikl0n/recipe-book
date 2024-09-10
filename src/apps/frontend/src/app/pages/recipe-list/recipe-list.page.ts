@@ -1,15 +1,18 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, effect, inject, signal } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 
+import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { MatButtonModule } from "@angular/material/button";
 import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
 
 import { Store } from "@ngrx/store";
 import { take } from "rxjs";
 
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Category } from "../../api/category.api";
 import { ReadImage } from "../../api/image.api";
 import { ReadRecipe } from "../../api/recipe.api";
@@ -29,6 +32,7 @@ import {
   RecipeSelectRecipes,
   RecipeSelectStatus,
 } from "../../states/recipe/recipe.reducer";
+import { UserActions } from "../../states/user/user.action";
 import { UserSelectUser } from "../../states/user/user.reducer";
 
 export type ExtendedRecipe = ReadRecipe & {
@@ -56,6 +60,7 @@ export class RecipeListPage {
   store = inject(Store);
   router = inject(Router);
   dialog = inject(MatDialog);
+  bottomSheet = inject(MatBottomSheet);
 
   user = this.store.selectSignal(UserSelectUser);
 
@@ -150,5 +155,54 @@ export class RecipeListPage {
 
   onClickCreateRecipe() {
     this.router.navigateByUrl(`recipes/create`);
+  }
+
+  onClickMenu() {
+    this.bottomSheet.open(RecipeListMenuComponent);
+  }
+}
+
+@Component({
+  template: ` <mat-nav-list>
+    @if (user()) {
+      <a mat-list-item (click)="logout($event)">
+        <span matListItemTitle>Abmelden</span>
+      </a>
+    } @else {
+      <a routerLink="/login" mat-list-item (click)="openLink($event)">
+        <span matListItemTitle>Anmelden</span>
+      </a>
+
+      <a routerLink="/register" mat-list-item (click)="openLink($event)">
+        <span matListItemTitle>Registrieren</span>
+      </a>
+    }
+  </mat-nav-list>`,
+  standalone: true,
+  imports: [MatListModule, RouterModule],
+})
+export class RecipeListMenuComponent {
+  bottomSheetRef = inject<MatBottomSheetRef<RecipeListMenuComponent>>(MatBottomSheetRef);
+
+  store = inject(Store);
+  snackBar = inject(MatSnackBar);
+
+  user = this.store.selectSignal(UserSelectUser);
+
+  openLink(event: MouseEvent): void {
+    this.bottomSheetRef.dismiss();
+
+    event.preventDefault();
+  }
+
+  logout(event: MouseEvent) {
+    this.bottomSheetRef.dismiss();
+
+    event.preventDefault();
+
+    localStorage.removeItem("user");
+    this.store.dispatch(UserActions.deleteUser());
+
+    this.snackBar.open("Erfolgreich abgemeldet", "Ok", { duration: 5000 });
   }
 }

@@ -24,6 +24,11 @@ export const userFeature = createFeature({
       user,
     })),
 
+    on(UserActions.deleteUser, (state) => ({
+      ...state,
+      user: null,
+    })),
+
     on(UserActions.login, UserActions.register, (state) => ({
       ...state,
       status: "LOADING" as const,
