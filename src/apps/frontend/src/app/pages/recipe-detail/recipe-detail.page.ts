@@ -1,11 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, effect, inject } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { Store } from "@ngrx/store";
 
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
 
+import { MatButtonModule } from "@angular/material/button";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { CategorySelectCategoryById } from "../../states/category/category.reducer";
 import { ImageActions } from "../../states/image/image.action";
@@ -28,13 +30,14 @@ import { UnitSelectUnits } from "../../states/unit/unit.reducer";
 @Component({
   selector: "app-recipe-detail",
   standalone: true,
-  imports: [LoadingComponent, CommonModule, MatCheckboxModule],
+  imports: [LoadingComponent, CommonModule, MatCheckboxModule, MatIconModule, MatButtonModule],
   templateUrl: "./recipe-detail.page.html",
   styleUrl: "./recipe-detail.page.scss",
 })
 export class RecipeDetailPage {
   activatedRoute = inject(ActivatedRoute);
   store = inject(Store);
+  router = inject(Router);
 
   paramRecipeId = Number(this.activatedRoute.snapshot.paramMap.get("id"));
 
@@ -135,5 +138,9 @@ export class RecipeDetailPage {
 
   isCheckedIngredient(index: number) {
     return this.checkedIngredients.has(index);
+  }
+
+  onClickBackButton() {
+    this.router.navigateByUrl("/recipes");
   }
 }

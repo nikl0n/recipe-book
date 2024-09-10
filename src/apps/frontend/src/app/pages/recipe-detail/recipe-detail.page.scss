@@ -35,6 +35,12 @@
   }
 }
 
+#back {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+}
+
 @media only screen and (max-width: 800px) {
   #recipe {
     padding: 10px 50px;
@@ -48,5 +54,12 @@
 
   .recipe-header {
     flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #back {
+    bottom: 10px;
+    left: 10px;
   }
 }
