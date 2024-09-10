@@ -3,8 +3,8 @@
 } @else {
   <section id="filter">
     <mat-chip-listbox (change)="onClickChipCategory($event)">
-      @for (course of categories(); track $index) {
-        <mat-chip-option [value]="course.id">{{ course.name }}</mat-chip-option>
+      @for (category of categories(); track $index) {
+        <mat-chip-option [value]="category.id">{{ category.name }}</mat-chip-option>
       }
     </mat-chip-listbox>
   </section>
