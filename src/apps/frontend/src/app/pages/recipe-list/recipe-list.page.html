@@ -2,7 +2,7 @@
   <app-loading></app-loading>
 } @else {
   <section id="filter">
-    <mat-chip-listbox (change)="onClickChipCategory($event)">
+    <mat-chip-listbox multiple (change)="onClickChipCategory($event)">
       @for (category of categories(); track $index) {
         <mat-chip-option [value]="category.id">{{ category.name }}</mat-chip-option>
       }

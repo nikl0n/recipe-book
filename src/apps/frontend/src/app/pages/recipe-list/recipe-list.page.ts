@@ -74,7 +74,7 @@ export class RecipeListPage {
 
   categories = this.store.selectSignal(CategorySelectCategories);
 
-  activeCategoryId = signal<Category["id"] | null>(null);
+  activeCategoryIds = signal<Category["id"][]>([]);
 
   extendedRecipe = computed(() => {
     let recipes: ExtendedRecipe[] = this.recipes()
@@ -89,8 +89,8 @@ export class RecipeListPage {
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    if (typeof this.activeCategoryId() === "number") {
-      recipes = recipes.filter((recipe) => recipe.categoryId === this.activeCategoryId());
+    if (this.activeCategoryIds().length > 0) {
+      recipes = recipes.filter((recipe) => this.activeCategoryIds().includes(recipe.categoryId));
     }
 
     return recipes;
@@ -116,15 +116,9 @@ export class RecipeListPage {
   );
 
   onClickChipCategory(event: MatChipListboxChange) {
-    const categoryId = event.value as Category["id"];
+    const categoryIds = event.value as Array<Category["id"]>;
 
-    if (categoryId === undefined) {
-      this.activeCategoryId.set(null);
-
-      return;
-    }
-
-    this.activeCategoryId.set(categoryId);
+    this.activeCategoryIds.set(categoryIds);
   }
 
   onClickRecipe(id: number) {
