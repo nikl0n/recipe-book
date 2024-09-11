@@ -68,12 +68,16 @@ pnpm dev
 - [x] show login/register and logout buttons
 - [ ] add new angular material dark theme
 - [ ] recipe duration
+- [ ] recipe nutritional values
+- [ ] show recipe username
 
 ### Backend
 
 - [x] rights to create, update and delete a recipe
   - [ ] include token with jwt
 - [ ] recipe duration
+- [ ] recipe nutritional values
+- [ ] user change primary key id to username -> name
 
 ### Both
 
