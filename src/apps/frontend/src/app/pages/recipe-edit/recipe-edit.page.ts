@@ -1,7 +1,10 @@
 import { Component, computed, effect, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+
 import { Store } from "@ngrx/store";
+
 import { UpdateRecipeExtended } from "../../api/recipe.api";
+import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeUpsertComponent } from "../../components/recipe-upsert/recipe-upsert.component";
 import { ImageActions } from "../../states/image/image.action";
@@ -22,7 +25,7 @@ import { UserSelectUser } from "../../states/user/user.reducer";
 @Component({
   selector: "app-recipe-list",
   standalone: true,
-  imports: [RecipeUpsertComponent, LoadingComponent],
+  imports: [RecipeUpsertComponent, LoadingComponent, BackButtonComponent],
   templateUrl: "./recipe-edit.page.html",
   styleUrl: "./recipe-edit.page.scss",
 })

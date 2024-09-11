@@ -7,13 +7,14 @@ import { Store } from "@ngrx/store";
 
 import { CreateUser } from "../../api/user.api";
 import { AuthComponent } from "../../components/auth/auth.component";
+import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { UserActions } from "../../states/user/user.action";
 import { UserSelectStatus } from "../../states/user/user.reducer";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [AuthComponent],
+  imports: [AuthComponent, BackButtonComponent],
   templateUrl: "./login.page.html",
   styleUrl: "./login.page.scss",
 })

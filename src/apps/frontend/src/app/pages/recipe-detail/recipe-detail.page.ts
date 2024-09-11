@@ -8,6 +8,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
 
 import { MatButtonModule } from "@angular/material/button";
+import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { CategorySelectCategoryById } from "../../states/category/category.reducer";
 import { ImageActions } from "../../states/image/image.action";
@@ -30,7 +31,16 @@ import { UnitSelectUnits } from "../../states/unit/unit.reducer";
 @Component({
   selector: "app-recipe-detail",
   standalone: true,
-  imports: [LoadingComponent, CommonModule, MatCheckboxModule, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+
+    LoadingComponent,
+    BackButtonComponent,
+
+    MatCheckboxModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: "./recipe-detail.page.html",
   styleUrl: "./recipe-detail.page.scss",
 })

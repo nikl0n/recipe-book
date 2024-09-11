@@ -2,4 +2,6 @@
   <app-loading></app-loading>
 } @else {
   <app-recipe-upsert action="edit" (onEditRecipe)="onEditRecipe($event)"></app-recipe-upsert>
+
+  <app-back-button link="/recipes"></app-back-button>
 }
