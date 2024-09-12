@@ -8,12 +8,12 @@ import { CreateStep, ReadStep } from "./step.api";
 
 export type ReadRecipe = {
   id: number;
-  userId: number;
+  userName: string;
   categoryId: number;
   name: string;
   timestamp: Date;
 };
-export type CreateRecipe = Omit<ReadRecipe, "id" | "userId" | "timestamp">;
+export type CreateRecipe = Omit<ReadRecipe, "id" | "userName" | "timestamp">;
 export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 export type CreateRecipeExtended = CreateRecipe & {

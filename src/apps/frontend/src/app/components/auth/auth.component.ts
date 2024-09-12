@@ -44,13 +44,13 @@ export class AuthComponent {
   auth() {
     if (this.form.invalid) return;
 
-    const username = this.form.controls.username.value;
+    const name = this.form.controls.username.value;
     const password = this.form.controls.password.value;
 
-    if (!username || !password) return;
+    if (!name || !password) return;
 
     const user: CreateUser = {
-      username,
+      name,
       password,
     };
 

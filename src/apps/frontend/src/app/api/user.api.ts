@@ -3,8 +3,8 @@ import { inject, Injectable } from "@angular/core";
 
 import { environment } from "../../environment/environment";
 
-export type ReadUser = { id: number; username: string; token: string };
-export type CreateUser = Omit<ReadUser, "id" | "token"> & { password: string };
+export type ReadUser = { name: string; token: string };
+export type CreateUser = Omit<ReadUser, "token"> & { password: string };
 
 @Injectable({ providedIn: "root" })
 export class UserApi {
