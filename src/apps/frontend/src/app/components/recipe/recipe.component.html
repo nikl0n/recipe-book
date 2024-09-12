@@ -4,7 +4,7 @@
     [src]="recipe().images.length > 0 ? recipe().images[0].base64 : 'recipe-placeholder.png'" />
 
   <span class="headline">{{ recipe().name }}</span>
-  <small>{{ recipe().category?.name }}</small>
+  <small>{{ recipe().category?.name }} - {{ recipe().userName }}</small>
 
   <mat-card-actions>
     <button mat-icon-button>
