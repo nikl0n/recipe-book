@@ -27,6 +27,7 @@ export const userFeature = createFeature({
     on(UserActions.deleteUser, (state) => ({
       ...state,
       user: null,
+      status: "IDLE" as const,
     })),
 
     on(UserActions.login, UserActions.register, (state) => ({

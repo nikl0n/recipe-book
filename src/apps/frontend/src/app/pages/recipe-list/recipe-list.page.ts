@@ -192,11 +192,11 @@ export class RecipeListMenuComponent {
   logout(event: MouseEvent) {
     this.bottomSheetRef.dismiss();
 
-    event.preventDefault();
-
     localStorage.removeItem("user");
     this.store.dispatch(UserActions.deleteUser());
 
     this.snackBar.open("Erfolgreich abgemeldet", "Ok", { duration: 5000 });
+
+    event.preventDefault();
   }
 }
