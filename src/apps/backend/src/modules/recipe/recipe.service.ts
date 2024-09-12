@@ -41,7 +41,7 @@ export class RecipeService {
       steps: CreateStep[];
       image: CreateImage;
     },
-    userId: number
+    userName: string
   ) {
     const timestamp = new Date();
 
@@ -49,7 +49,7 @@ export class RecipeService {
       const newRecipe = await tx.recipe.create({
         data: {
           name: recipe.name,
-          userId,
+          userName,
           categoryId: recipe.categoryId,
           timestamp,
         },

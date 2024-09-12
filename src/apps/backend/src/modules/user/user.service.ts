@@ -21,10 +21,10 @@ export class UserService {
     return compare(password, hashedPassword);
   }
 
-  findByUsername(username: string) {
+  findByName(name: string) {
     return this.prisma.user.findUnique({
       where: {
-        username,
+        name,
       },
     });
   }
@@ -37,10 +37,10 @@ export class UserService {
     });
   }
 
-  create(username: string, password: string, token: string) {
+  create(name: string, password: string, token: string) {
     return this.prisma.user.create({
       data: {
-        username,
+        name,
         password,
         token,
         timestamp: new Date(),

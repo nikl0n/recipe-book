@@ -28,12 +28,12 @@ import { RecipeService } from "./recipe.service";
 
 export type ReadRecipe = {
   id: number;
-  userId: number;
+  userName: string;
   categoryId: number;
   name: string;
   timestamp: Date;
 };
-export type CreateRecipe = Omit<ReadRecipe, "id" | "userId" | "timestamp">;
+export type CreateRecipe = Omit<ReadRecipe, "id" | "userName" | "timestamp">;
 export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 @Controller("api/v1/recipes")
@@ -69,7 +69,7 @@ export class RecipeController {
     },
     @Req() request: Request & { user: ReadUser }
   ) {
-    return this.recipeService.create(recipe, request.user.id);
+    return this.recipeService.create(recipe, request.user.name);
   }
 
   @Put(":id")
@@ -88,7 +88,7 @@ export class RecipeController {
     const recipe = await this.recipeService.findById(recipeId);
     if (!recipe) throw new BadRequestException(`no recipe found with id ${recipeId}`);
 
-    if (recipe.userId !== request.user.id)
+    if (recipe.userName !== request.user.name)
       throw new UnauthorizedException("not allowed to edit recipe");
 
     return this.recipeService.update(bodyRecipe);
@@ -103,7 +103,7 @@ export class RecipeController {
     const recipe = await this.recipeService.findById(recipeId);
     if (!recipe) throw new NotFoundException(`no recipe found with id ${recipeId}`);
 
-    if (recipe.userId !== request.user.id)
+    if (recipe.userName !== request.user.name)
       throw new UnauthorizedException("not allowed to delete recipe");
 
     return this.recipeService.delete(recipeId);
