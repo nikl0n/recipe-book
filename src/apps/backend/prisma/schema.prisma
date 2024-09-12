@@ -7,74 +7,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model categories {
-  id      Int       @id @default(autoincrement())
-  name    String    @db.VarChar(255)
-  recipes recipes[]
+model user {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique(map: "username") @db.VarChar(50)
+  password  String   @db.VarChar(500)
+  token     String?  @unique(map: "token") @db.VarChar(500)
+  timestamp DateTime @db.DateTime(0)
+  recipe    recipe[]
 }
 
-model images {
+model category {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(255)
+  recipe recipe[]
+}
+
+model image {
   id        Int      @id @default(autoincrement())
   recipeId  Int
   base64    String   @db.LongText
   timestamp DateTime @db.DateTime(0)
-  recipes   recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "images_ibfk_1")
+  recipes   recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "image_ibfk_1")
 
   @@index([recipeId], map: "recipe_id")
 }
 
-model ingredients {
+model ingredient {
   id        Int      @id @default(autoincrement())
   recipeId  Int
   unitId    Int
   name      String   @db.VarChar(255)
   amount    Int
   timestamp DateTime @db.DateTime(0)
-  recipes   recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "ingredients_ibfk_1")
-  units     units    @relation(fields: [unitId], references: [id], onDelete: Cascade, map: "ingredients_ibfk_2")
+  recipes   recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "ingredient_ibfk_1")
+  unit      unit     @relation(fields: [unitId], references: [id], onDelete: Cascade, map: "ingredient_ibfk_2")
 
   @@index([recipeId], map: "recipe_id")
   @@index([unitId], map: "unit_id")
 }
 
-model recipes {
-  id          Int           @id @default(autoincrement())
-  userId      Int
-  categoryId  Int
-  name        String        @db.VarChar(255)
-  timestamp   DateTime      @db.DateTime(0)
-  images      images[]
-  ingredients ingredients[]
-  categories  categories    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recipes_ibfk_1")
-  user        user          @relation(fields: [userId], references: [id], onDelete: Cascade, map: "recipes_ibfk_2")
-  steps       steps[]
-
-  @@index([categoryId], map: "category_id")
-  @@index([userId], map: "userId")
-}
-
-model steps {
+model step {
   id        Int      @id @default(autoincrement())
   recipeId  Int
   order     Int
   text      String   @db.Text
   timestamp DateTime @db.DateTime(0)
-  recipes   recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "steps_ibfk_1")
+  recipes   recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "step_ibfk_1")
 
   @@index([recipeId], map: "steps_ibfk_2")
 }
 
-model units {
-  id          Int           @id @default(autoincrement())
-  name        String        @db.VarChar(255)
-  ingredients ingredients[]
+model unit {
+  id         Int          @id @default(autoincrement())
+  name       String       @db.VarChar(255)
+  ingredient ingredient[]
 }
 
-model user {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique(map: "username") @db.VarChar(50)
-  password  String    @db.VarChar(500)
-  token     String?   @unique(map: "token") @db.VarChar(500)
-  timestamp DateTime  @db.DateTime(0)
-  recipes   recipes[]
+model recipe {
+  id         Int          @id @default(autoincrement())
+  userId     Int
+  categoryId Int
+  name       String       @db.VarChar(255)
+  timestamp  DateTime     @db.DateTime(0)
+  image      image[]
+  ingredient ingredient[]
+  category   category     @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recipe_ibfk_1")
+  user       user         @relation(fields: [userId], references: [id], onDelete: Cascade, map: "recipe_ibfk_2")
+  step       step[]
+
+  @@index([categoryId], map: "category_id")
+  @@index([userId], map: "userId")
 }

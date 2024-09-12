@@ -6,7 +6,7 @@ export class StepService {
   prisma = new PrismaClient();
 
   findManyByRecipeId(recipeId: number) {
-    return this.prisma.steps.findMany({
+    return this.prisma.step.findMany({
       where: {
         recipeId,
       },

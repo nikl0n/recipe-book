@@ -7,6 +7,6 @@ export class UnitService {
   prisma = new PrismaClient();
 
   findMany() {
-    return this.prisma.units.findMany();
+    return this.prisma.unit.findMany();
   }
 }

@@ -12,7 +12,7 @@ export class RecipeService {
   prisma = new PrismaClient();
 
   findById(id: number) {
-    return this.prisma.recipes.findUnique({
+    return this.prisma.recipe.findUnique({
       where: {
         id,
       },
@@ -20,7 +20,7 @@ export class RecipeService {
   }
 
   findMany() {
-    return this.prisma.recipes.findMany({
+    return this.prisma.recipe.findMany({
       orderBy: {
         name: "asc",
       },
@@ -28,11 +28,11 @@ export class RecipeService {
   }
 
   findUnique(id: number) {
-    return this.prisma.recipes.findUnique({ where: { id } });
+    return this.prisma.recipe.findUnique({ where: { id } });
   }
 
   delete(id: number) {
-    return this.prisma.recipes.delete({ where: { id } });
+    return this.prisma.recipe.delete({ where: { id } });
   }
 
   create(
@@ -46,7 +46,7 @@ export class RecipeService {
     const timestamp = new Date();
 
     return this.prisma.$transaction(async (tx) => {
-      const newRecipe = await tx.recipes.create({
+      const newRecipe = await tx.recipe.create({
         data: {
           name: recipe.name,
           userId,
@@ -56,7 +56,7 @@ export class RecipeService {
       });
 
       if (recipe.image.base64) {
-        await tx.images.create({
+        await tx.image.create({
           data: {
             base64: recipe.image.base64,
             recipeId: newRecipe.id,
@@ -66,7 +66,7 @@ export class RecipeService {
       }
 
       if (recipe.ingredients.length > 0) {
-        await tx.ingredients.createMany({
+        await tx.ingredient.createMany({
           data: recipe.ingredients.map((ingredient) => ({
             amount: ingredient.amount,
             name: ingredient.name,
@@ -78,7 +78,7 @@ export class RecipeService {
       }
 
       if (recipe.steps.length > 0) {
-        await tx.steps.createMany({
+        await tx.step.createMany({
           data: recipe.steps.map((step) => ({
             text: step.text,
             order: step.order,
@@ -103,7 +103,7 @@ export class RecipeService {
     const timestamp = new Date();
 
     return this.prisma.$transaction(async (tx) => {
-      const newRecipe = await this.prisma.recipes.update({
+      const newRecipe = await this.prisma.recipe.update({
         where: {
           id: recipe.id,
         },
@@ -113,25 +113,25 @@ export class RecipeService {
         },
       });
 
-      await tx.images.deleteMany({
+      await tx.image.deleteMany({
         where: {
           recipeId: recipe.id,
         },
       });
 
-      await tx.ingredients.deleteMany({
+      await tx.ingredient.deleteMany({
         where: {
           recipeId: recipe.id,
         },
       });
 
-      await tx.steps.deleteMany({
+      await tx.step.deleteMany({
         where: {
           recipeId: recipe.id,
         },
       });
       if (recipe.image) {
-        await tx.images.create({
+        await tx.image.create({
           data: {
             recipeId: recipe.id,
             base64: recipe.image.base64,
@@ -141,7 +141,7 @@ export class RecipeService {
       }
 
       if (recipe.ingredients.length > 0) {
-        await tx.ingredients.createMany({
+        await tx.ingredient.createMany({
           data: recipe.ingredients.map((ingredient) => ({
             recipeId: recipe.id,
             unitId: ingredient.unitId,
@@ -153,7 +153,7 @@ export class RecipeService {
       }
 
       if (recipe.steps.length > 0) {
-        await tx.steps.createMany({
+        await tx.step.createMany({
           data: recipe.steps.map((step) => ({
             recipeId: recipe.id,
             text: step.text,

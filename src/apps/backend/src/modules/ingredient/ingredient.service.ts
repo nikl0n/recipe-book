@@ -6,7 +6,7 @@ export class IngredientService {
   prisma = new PrismaClient();
 
   findManyByRecipeId(recipeId: number) {
-    return this.prisma.ingredients.findMany({
+    return this.prisma.ingredient.findMany({
       where: {
         recipeId,
       },

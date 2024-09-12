@@ -19,6 +19,6 @@ export class ImageController {
     const recipes = await this.recipeService.findMany();
     const recipeIds = recipes.map((recipe) => recipe.id);
 
-    return this.imageService.findFirstPerRecipeIds(recipeIds);
+    return this.imageService.findFirstByRecipeIds(recipeIds);
   }
 }

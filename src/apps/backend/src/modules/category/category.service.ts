@@ -7,6 +7,6 @@ export class CategoryService {
   prisma = new PrismaClient();
 
   findMany() {
-    return this.prisma.categories.findMany();
+    return this.prisma.category.findMany();
   }
 }

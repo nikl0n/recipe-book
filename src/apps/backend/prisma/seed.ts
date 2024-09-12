@@ -12,7 +12,7 @@ async function main() {
   ];
 
   for (const unitRecord of unitRecords) {
-    await prisma.units.upsert({
+    await prisma.unit.upsert({
       where: {
         id: unitRecord.id,
       },
@@ -36,7 +36,7 @@ async function main() {
   ];
 
   for (const categoryRecord of categoryRecords) {
-    await prisma.categories.upsert({
+    await prisma.category.upsert({
       where: {
         id: categoryRecord.id,
       },
