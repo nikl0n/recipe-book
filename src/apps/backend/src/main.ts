@@ -9,7 +9,7 @@ async function bootstrap() {
 
   app.enableCors();
 
-  app.use(json({ limit: "16mb" }));
+  app.use(json({ limit: "3mb" }));
 
   await app.listen(3000);
 }
