@@ -5,23 +5,22 @@ import { PrismaClient } from "@prisma/client";
 export class ImageService {
   prisma = new PrismaClient();
 
-  findManyByRecipeId(recipeId: number) {
-    return this.prisma.image.findMany({
+  getBufferMimeTypeFromBase64String(base64: string) {
+    const matches = base64.match(/^data:(.*?);base64,(.*)$/);
+
+    if (!matches) return null;
+
+    const mimeType = matches[1];
+    const content = Buffer.from(matches[2], "base64");
+
+    return { mimeType, content };
+  }
+
+  findFirstByRecipeId(recipeId: number) {
+    return this.prisma.image.findFirst({
       where: {
         recipeId,
       },
     });
-  }
-
-  async findFirstByRecipeIds(recipeIds: number[]) {
-    return Promise.all(
-      recipeIds.map(async (recipeId) =>
-        this.prisma.image.findFirst({
-          where: {
-            recipeId,
-          },
-        })
-      )
-    );
   }
 }

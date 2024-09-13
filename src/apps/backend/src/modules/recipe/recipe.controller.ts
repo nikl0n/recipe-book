@@ -10,11 +10,13 @@ import {
   Post,
   Put,
   Req,
+  Res,
   UnauthorizedException,
   UseGuards,
 } from "@nestjs/common";
+import { SkipThrottle } from "@nestjs/throttler";
 
-import { Request } from "express";
+import { Request, Response } from "express";
 
 import { TokenAuthGuard } from "src/guards/token.guard";
 import { CreateImage } from "../image/image.controller";
@@ -125,11 +127,16 @@ export class RecipeController {
     return this.ingredientService.findManyByRecipeId(recipeId);
   }
 
-  @Get(":id/images")
-  async findManyImagesByRecipeId(@Param("id", ParseIntPipe) recipeId: number) {
+  @SkipThrottle()
+  @Get(":id/image")
+  async findFirstByRecipeId(@Param("id", ParseIntPipe) recipeId: number, @Res() res: Response) {
     const recipe = await this.recipeService.findById(recipeId);
     if (!recipe) throw new NotFoundException(`no recipe found with id ${recipeId}`);
 
-    return this.imageService.findManyByRecipeId(recipeId);
+    const image = await this.imageService.findFirstByRecipeId(recipeId);
+
+    res.setHeader("Content-Type", image.mimeType);
+
+    res.send(image.content);
   }
 }

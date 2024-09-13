@@ -24,11 +24,12 @@ model category {
 model image {
   id        Int      @id @default(autoincrement())
   recipeId  Int
-  base64    String   @db.LongText
+  content   Bytes    @db.MediumBlob
+  mimeType  String   @db.VarChar(25)
   timestamp DateTime @db.DateTime(0)
   recipes   recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, map: "image_ibfk_1")
 
-  @@index([recipeId], map: "recipe_id")
+  @@index([recipeId], map: "recipeId")
 }
 
 model ingredient {

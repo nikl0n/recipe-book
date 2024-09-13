@@ -3,6 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 
 import { CreateImage } from "../image/image.controller";
+import { ImageService } from "../image/image.service";
 import { CreateIngredient } from "../ingredient/ingredient.controller";
 import { CreateStep } from "../step/step.controller";
 import { CreateRecipe } from "./recipe.controller";
@@ -10,6 +11,8 @@ import { CreateRecipe } from "./recipe.controller";
 @Injectable()
 export class RecipeService {
   prisma = new PrismaClient();
+
+  constructor(private readonly imageService: ImageService) {}
 
   findById(id: number) {
     return this.prisma.recipe.findUnique({
@@ -56,13 +59,20 @@ export class RecipeService {
       });
 
       if (recipe.image.base64) {
-        await tx.image.create({
-          data: {
-            base64: recipe.image.base64,
-            recipeId: newRecipe.id,
-            timestamp,
-          },
-        });
+        const { mimeType, content } = this.imageService.getBufferMimeTypeFromBase64String(
+          recipe.image.base64
+        );
+
+        if (mimeType && content) {
+          await tx.image.create({
+            data: {
+              content,
+              mimeType,
+              recipeId: newRecipe.id,
+              timestamp,
+            },
+          });
+        }
       }
 
       if (recipe.ingredients.length > 0) {
@@ -131,13 +141,20 @@ export class RecipeService {
         },
       });
       if (recipe.image) {
-        await tx.image.create({
-          data: {
-            recipeId: recipe.id,
-            base64: recipe.image.base64,
-            timestamp,
-          },
-        });
+        const { mimeType, content } = this.imageService.getBufferMimeTypeFromBase64String(
+          recipe.image.base64
+        );
+
+        if (mimeType && content) {
+          await tx.image.create({
+            data: {
+              content,
+              mimeType,
+              recipeId: newRecipe.id,
+              timestamp,
+            },
+          });
+        }
       }
 
       if (recipe.ingredients.length > 0) {
