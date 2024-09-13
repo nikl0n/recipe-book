@@ -8,24 +8,18 @@ import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { Store } from "@ngrx/store";
 import { take } from "rxjs";
 
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { environment } from "../../../environment/environment";
 import { Category } from "../../api/category.api";
-import { ReadImage } from "../../api/image.api";
 import { ReadRecipe } from "../../api/recipe.api";
 import { DialogAreYouSureComponent } from "../../components/dialog-are-you-sure/dialog-are-you-sure.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
-import { ImageActions } from "../../states/image/image.action";
-import {
-  ImageSelectImages,
-  ImageSelectLastFetched,
-  ImageSelectStatus,
-} from "../../states/image/image.reducer";
 import { RecipeActions } from "../../states/recipe/recipe.action";
 import {
   RecipeSelectLastFetched,
@@ -37,7 +31,7 @@ import { UserSelectUser } from "../../states/user/user.reducer";
 
 export type ExtendedRecipe = ReadRecipe & {
   category: Category | undefined;
-  images: ReadImage[];
+  image: string;
 };
 
 @Component({
@@ -68,10 +62,6 @@ export class RecipeListPage {
   recipes = this.store.selectSignal(RecipeSelectRecipes);
   recipeLastFetched = this.store.selectSignal(RecipeSelectLastFetched);
 
-  imageStatus = this.store.selectSignal(ImageSelectStatus);
-  images = this.store.selectSignal(ImageSelectImages);
-  imageLastFetched = this.store.selectSignal(ImageSelectLastFetched);
-
   categories = this.store.selectSignal(CategorySelectCategories);
 
   activeCategoryIds = signal<Category["id"][]>([]);
@@ -81,11 +71,7 @@ export class RecipeListPage {
       .map((recipe) => ({
         ...recipe,
         category: this.categories().find((category) => category.id === recipe.categoryId),
-        images: this.images().filter((image) => {
-          if (!image) return false;
-
-          return image.recipeId === recipe.id;
-        }),
+        image: `${environment.api.baseUrl}/api/v1/recipes/${recipe.id}/image`,
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -97,7 +83,7 @@ export class RecipeListPage {
   });
 
   isLoading = computed(() => {
-    return [this.recipeStatus(), this.imageStatus()].some((status) => status === "LOADING");
+    return [this.recipeStatus()].some((status) => status === "LOADING");
   });
 
   fetchResources = effect(
@@ -105,11 +91,6 @@ export class RecipeListPage {
       if (this.recipeLastFetched() !== "recipe-list") {
         this.store.dispatch(RecipeActions.fetchAll());
         this.store.dispatch(RecipeActions.setLastFetched({ componentName: "recipe-list" }));
-      }
-
-      if (this.imageLastFetched() !== "recipe-list") {
-        this.store.dispatch(ImageActions.fetchMany());
-        this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-list" }));
       }
     },
     { allowSignalWrites: true }

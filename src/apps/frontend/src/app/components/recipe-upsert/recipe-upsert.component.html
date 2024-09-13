@@ -1,7 +1,7 @@
 <section id="recipe-create" [formGroup]="form">
   <h1 style="margin-bottom: 25px">{{ submitButtonName() }}</h1>
 
-  @if (this.action() === "edit" && !this.recipe()) {
+  @if (action() === "edit" && !recipe()) {
     <i>Kein Rezept gefunden</i>
   } @else {
     <div style="display: flex; flex-direction: column; gap: 10px">
@@ -88,8 +88,8 @@
       </div>
 
       <div style="display: flex; gap: 10px; margin-bottom: 25px">
-        @if (form.controls.image.value) {
-          <img [src]="form.controls.image.value" style="width: 200px; border-radius: 4px" />
+        @if (form.controls.image.value; as image) {
+          <img [src]="image" (error)="onImageError()" style="width: 200px; border-radius: 4px" />
         }
 
         <button type="button" mat-raised-button (click)="fileInput.click()">Bild auswählen</button>

@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
 import { Store } from "@ngrx/store";
 
@@ -23,16 +24,15 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { ActivatedRoute } from "@angular/router";
+import { environment } from "../../../environment/environment";
 import { CreateIngredient, ReadIngredient } from "../../api/ingredients.api";
 import { CreateRecipeExtended, UpdateRecipeExtended } from "../../api/recipe.api";
 import { CreateStep, ReadStep } from "../../api/step.api";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
-import { ImageSelectImageByRecipeId } from "../../states/image/image.reducer";
 import { IngredientSelectIngredientsByRecipeId } from "../../states/ingredient/ingredient.reducer";
 import {
   RecipeSelectRecipeById,
@@ -86,8 +86,6 @@ export class RecipeUpsertComponent {
     IngredientSelectIngredientsByRecipeId(this.paramRecipeId)
   );
 
-  imageByRecipeId = this.store.selectSignal(ImageSelectImageByRecipeId(this.paramRecipeId));
-
   stepsByRecipe = this.store.selectSignal(StepSelectStepsByRecipeId(this.paramRecipeId));
 
   isFetching = computed(() => {
@@ -96,11 +94,18 @@ export class RecipeUpsertComponent {
     return false;
   });
 
+  getImageUrl = computed(() => {
+    const recipe = this.recipe();
+    if (!recipe) return null;
+
+    return `${environment.api.baseUrl}/api/v1/recipes/${recipe.id}/image`;
+  });
+
   submitButtonName = computed(() =>
     this.action() === "create" ? "Rezept erstellen" : "Rezept bearbeiten"
   );
 
-  initEffect = effect(() => {
+  private _initEffect = effect(() => {
     const recipe = this.recipe();
 
     if (!recipe || this.action() === "create") {
@@ -112,7 +117,9 @@ export class RecipeUpsertComponent {
 
     this.form.controls.name.patchValue(recipe.name);
     this.form.controls.category.patchValue(recipe.categoryId);
-    this.form.controls.image.patchValue(this.imageByRecipeId()?.base64 ?? "");
+    this.form.controls.image.patchValue(
+      `${environment.api.baseUrl}/api/v1/recipes/${recipe.id}/image`
+    );
 
     if (this.action() === "edit") {
       for (const ingredient of this.ingredientsByRecipe()) {
@@ -200,6 +207,10 @@ export class RecipeUpsertComponent {
 
       reader.readAsDataURL(fileNode.files[0]);
     }
+  }
+
+  onImageError() {
+    this.form.controls.image.patchValue(null);
   }
 
   submitForm() {

@@ -21,4 +21,8 @@ export class RecipeComponent {
 
   user = input<ReadUser | null>();
   recipe = input.required<ExtendedRecipe>();
+
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = "recipe-placeholder.png";
+  }
 }

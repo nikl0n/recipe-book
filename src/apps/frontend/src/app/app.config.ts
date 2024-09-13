@@ -11,8 +11,6 @@ import { environment } from "../environment/environment";
 import { routes } from "./app.routes";
 import { CategoryEffect } from "./states/category/category.effect";
 import { categoryFeature } from "./states/category/category.reducer";
-import { ImageEffect } from "./states/image/image.effect";
-import { imageFeature } from "./states/image/image.reducer";
 import { IngredientEffect } from "./states/ingredient/ingredient.effect";
 import { ingredientFeature } from "./states/ingredient/ingredient.reducer";
 import { RecipeEffect } from "./states/recipe/recipe.effect";
@@ -44,9 +42,6 @@ export const appConfig: ApplicationConfig = {
 
     provideEffects(CategoryEffect),
     provideState(categoryFeature),
-
-    provideEffects(ImageEffect),
-    provideState(imageFeature),
 
     provideEffects(IngredientEffect),
     provideState(ingredientFeature),

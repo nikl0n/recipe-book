@@ -12,8 +12,4 @@ export class ImageApi {
   private readonly http = inject(HttpClient);
 
   private readonly baseUrl = `${environment.api.baseUrl}/api/v1/images`;
-
-  fetchMany() {
-    return this.http.get<ReadImage[]>(this.baseUrl);
-  }
 }

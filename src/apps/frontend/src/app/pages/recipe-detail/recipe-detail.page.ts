@@ -4,15 +4,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Store } from "@ngrx/store";
 
+import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
 
-import { MatButtonModule } from "@angular/material/button";
+import { environment } from "../../../environment/environment";
 import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { CategorySelectCategoryById } from "../../states/category/category.reducer";
-import { ImageActions } from "../../states/image/image.action";
-import { ImageSelectImages, ImageSelectStatus } from "../../states/image/image.reducer";
 import { IngredientActions } from "../../states/ingredient/ingredient.action";
 import {
   IngredientSelectIngredients,
@@ -57,9 +56,6 @@ export class RecipeDetailPage {
   recipe = this.store.selectSignal(RecipeSelectRecipeById(this.paramRecipeId));
   recipeLastFetched = this.store.selectSignal(RecipeSelectLastFetched);
 
-  imageStatus = this.store.selectSignal(ImageSelectStatus);
-  images = this.store.selectSignal(ImageSelectImages);
-
   ingredientStatus = this.store.selectSignal(IngredientSelectStatus);
   ingredients = this.store.selectSignal(IngredientSelectIngredients);
 
@@ -98,9 +94,6 @@ export class RecipeDetailPage {
       } else {
         fetchStepsAndIngredients();
 
-        this.store.dispatch(ImageActions.fetchByRecipeId({ recipeId: recipe.id }));
-        this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-detail" }));
-
         this.fetchResourcesEffect.destroy();
       }
     },
@@ -108,12 +101,9 @@ export class RecipeDetailPage {
   );
 
   isLoading = computed(() => {
-    return [
-      this.recipeStatus(),
-      this.imageStatus(),
-      this.ingredientStatus(),
-      this.stepStatus(),
-    ].some((status) => status === "LOADING");
+    return [this.recipeStatus(), this.ingredientStatus(), this.stepStatus()].some(
+      (status) => status === "LOADING"
+    );
   });
 
   extendedRecipe = computed(() => {
@@ -123,11 +113,7 @@ export class RecipeDetailPage {
 
     return {
       ...recipe,
-      images: this.images().filter((image) => {
-        if (!image) return false;
-
-        return image.recipeId === this.recipe()?.id;
-      }),
+      image: `${environment.api.baseUrl}/api/v1/recipes/${recipe.id}/image`,
       ingredients: this.ingredients().map((ingredient) => ({
         ...ingredient,
         unit: this.units().find((unit) => unit.id === ingredient.unitId),
@@ -152,5 +138,9 @@ export class RecipeDetailPage {
 
   onClickBackButton() {
     this.router.navigateByUrl("/recipes");
+  }
+
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = "recipe-placeholder.png";
   }
 }

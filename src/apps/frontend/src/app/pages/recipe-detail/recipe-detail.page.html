@@ -5,11 +5,7 @@
     <section id="recipe">
       <div class="recipe-header">
         <div class="header-image">
-          @if (recipe.images[0]; as image) {
-            <img [src]="image.base64" />
-          } @else {
-            <img [src]="'recipe-placeholder.png'" />
-          }
+          <img [src]="recipe.image" (error)="onImageError($event)" />
         </div>
         <div class="header-ingredients">
           <h1 style="margin-bottom: 10px">{{ recipe.name }}</h1>

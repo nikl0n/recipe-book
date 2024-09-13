@@ -7,8 +7,6 @@ import { UpdateRecipeExtended } from "../../api/recipe.api";
 import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeUpsertComponent } from "../../components/recipe-upsert/recipe-upsert.component";
-import { ImageActions } from "../../states/image/image.action";
-import { ImageSelectStatus } from "../../states/image/image.reducer";
 import { IngredientActions } from "../../states/ingredient/ingredient.action";
 import { IngredientSelectStatus } from "../../states/ingredient/ingredient.reducer";
 import { RecipeActions } from "../../states/recipe/recipe.action";
@@ -42,8 +40,6 @@ export class RecipeEditPage {
   recipe = this.store.selectSignal(RecipeSelectRecipeById(this.paramRecipeId));
   recipeLastFetched = this.store.selectSignal(RecipeSelectLastFetched);
 
-  imageStatus = this.store.selectSignal(ImageSelectStatus);
-
   ingredientStatus = this.store.selectSignal(IngredientSelectStatus);
 
   stepStatus = this.store.selectSignal(StepSelectStatus);
@@ -76,9 +72,6 @@ export class RecipeEditPage {
       } else {
         fetchStepsAndIngredients();
 
-        this.store.dispatch(ImageActions.fetchByRecipeId({ recipeId: recipe.id }));
-        this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-edit" }));
-
         this.fetchResourcesEffect.destroy();
       }
     },
@@ -86,12 +79,9 @@ export class RecipeEditPage {
   );
 
   isLoading = computed(() => {
-    return [
-      this.recipeStatus(),
-      this.imageStatus(),
-      this.ingredientStatus(),
-      this.stepStatus(),
-    ].some((status) => status === "LOADING");
+    return [this.recipeStatus(), this.ingredientStatus(), this.stepStatus()].some(
+      (status) => status === "LOADING"
+    );
   });
 
   fetchResourcesAfterEdit = effect(
@@ -105,9 +95,6 @@ export class RecipeEditPage {
 
         this.store.dispatch(StepActions.fetchByRecipeId({ recipeId: recipe.id }));
         this.store.dispatch(StepActions.setLastFetched({ componentName: "recipe-edit" }));
-
-        this.store.dispatch(ImageActions.fetchByRecipeId({ recipeId: recipe.id }));
-        this.store.dispatch(ImageActions.setLastFetched({ componentName: "recipe-edit" }));
       }
     },
     { allowSignalWrites: true }
