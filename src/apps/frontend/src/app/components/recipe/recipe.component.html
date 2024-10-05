@@ -4,21 +4,18 @@
   <span class="headline">{{ recipe().name }}</span>
   <small>{{ recipe().category?.name }} - {{ recipe().userName }}</small>
 
-  <mat-card-actions>
-    <button mat-icon-button>
-      <mat-icon>print</mat-icon>
+  <!-- <mat-card-actions>
+    <button
+      mat-icon-button
+      [disabled]="user()?.name !== recipe().userName"
+      (click)="$event.stopPropagation(); onClickEditRecipe.emit(recipe().id)">
+      <mat-icon>edit</mat-icon>
     </button>
-    @if (user()?.name === recipe().userName) {
-      <button
-        mat-icon-button
-        (click)="$event.stopPropagation(); onClickEditRecipe.emit(recipe().id)">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        (click)="$event.stopPropagation(); onClickDeleteRecipe.emit(recipe().id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    }
-  </mat-card-actions>
+    <button
+      mat-icon-button
+      [disabled]="user()?.name !== recipe().userName"
+      (click)="$event.stopPropagation(); onClickDeleteRecipe.emit(recipe().id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions> -->
 </mat-card>

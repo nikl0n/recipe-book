@@ -51,9 +51,21 @@ export class RecipeEffect {
           tap(({ recipe }) => {
             this.router.navigateByUrl(`recipes/${recipe.id}`);
 
-            this.snackBar.open("Rezept wurde erfolgreich erstellt", "Ok", { duration: 5000 });
+            this.snackBar.open(`Rezept '${recipe.name}' wurde erfolgreich erstellt`, "Ok", {
+              duration: 5000,
+            });
           }),
-          catchError((error: HttpErrorResponse) => of(RecipeActions.createFailure({ error })))
+          catchError((error: HttpErrorResponse) => {
+            this.snackBar.open(
+              `Beim erstellen des Rezeptes '${recipe.name}' ist ein Fehler aufgetreten`,
+              "Ok",
+              {
+                duration: 5000,
+              }
+            );
+
+            return of(RecipeActions.createFailure({ error }));
+          })
         )
       )
     )
@@ -65,7 +77,20 @@ export class RecipeEffect {
       switchMap(({ recipeId, token }) =>
         this.recipeApi.delete(recipeId, token).pipe(
           map((recipe) => RecipeActions.deleteSuccess({ recipe })),
-          catchError((error: HttpErrorResponse) => of(RecipeActions.deleteFailure({ error })))
+          tap(({ recipe }) => {
+            this.router.navigateByUrl(`recipes`);
+
+            this.snackBar.open(`Rezept '${recipe.name}' wurde erfolgreich gelöscht`, "Ok", {
+              duration: 5000,
+            });
+          }),
+          catchError((error: HttpErrorResponse) => {
+            this.snackBar.open(`Beim löschen des Rezeptes ist ein Fehler aufgetreten`, "Ok", {
+              duration: 5000,
+            });
+
+            return of(RecipeActions.createFailure({ error }));
+          })
         )
       )
     )
@@ -77,7 +102,24 @@ export class RecipeEffect {
       switchMap(({ recipe, token }) =>
         this.recipeApi.update(recipe, token).pipe(
           map((recipe) => RecipeActions.updateSuccess({ recipe })),
-          catchError((error: HttpErrorResponse) => of(RecipeActions.updateFailure({ error })))
+          tap(({ recipe }) => {
+            this.router.navigateByUrl(`recipes/${recipe.id}`);
+
+            this.snackBar.open(`Rezept '${recipe.name}' wurde erfolgreich bearbeitet`, "Ok", {
+              duration: 5000,
+            });
+          }),
+          catchError((error: HttpErrorResponse) => {
+            this.snackBar.open(
+              `Beim bearbeiten des Rezeptes '${recipe.name}' ist ein Fehler aufgetreten`,
+              "Ok",
+              {
+                duration: 5000,
+              }
+            );
+
+            return of(RecipeActions.createFailure({ error }));
+          })
         )
       )
     )

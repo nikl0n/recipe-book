@@ -1,7 +1,7 @@
 <section id="auth" [formGroup]="form">
   <mat-form-field>
     <mat-label>Benutzername</mat-label>
-    <input matInput formControlName="username" (keyup.enter)="auth()" />
+    <input matInput formControlName="username" (keyup.enter)="auth()" autofocus />
   </mat-form-field>
 
   <mat-form-field>

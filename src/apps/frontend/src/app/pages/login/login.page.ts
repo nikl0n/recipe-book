@@ -1,7 +1,4 @@
-import { Component, effect, inject } from "@angular/core";
-import { Router } from "@angular/router";
-
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component, inject } from "@angular/core";
 
 import { Store } from "@ngrx/store";
 
@@ -9,7 +6,6 @@ import { CreateUser } from "../../api/user.api";
 import { AuthComponent } from "../../components/auth/auth.component";
 import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { UserActions } from "../../states/user/user.action";
-import { UserSelectStatus } from "../../states/user/user.reducer";
 
 @Component({
   selector: "app-login",
@@ -20,24 +16,6 @@ import { UserSelectStatus } from "../../states/user/user.reducer";
 })
 export class LoginPage {
   store = inject(Store);
-  router = inject(Router);
-  snackBar = inject(MatSnackBar);
-
-  userStatus = this.store.selectSignal(UserSelectStatus);
-
-  loginEffect = effect(() => {
-    if (this.userStatus() === "SUCCESS") {
-      this.snackBar.open("Erfolgreich angemeldet", "Ok", { duration: 5000 });
-
-      this.router.navigateByUrl("recipes");
-    }
-
-    if (this.userStatus() === "ERROR") {
-      this.snackBar.open("Beim anmelden ist ein Fehler aufgetreten", "Ok", {
-        duration: 5000,
-      });
-    }
-  });
 
   login(user: CreateUser) {
     this.store.dispatch(UserActions.login({ user }));

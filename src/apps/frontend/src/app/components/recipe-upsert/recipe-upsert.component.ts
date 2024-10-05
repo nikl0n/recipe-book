@@ -142,15 +142,6 @@ export class RecipeUpsertComponent {
     }
   });
 
-  snackbarEffect = effect(() => {
-    if (this.recipeStatusAction() !== "CREATE") return;
-
-    if (this.recipeStatus() === "ERROR")
-      this.snackBar.open("Beim erstellen des Rezeptes ist ein Fehler aufgetreten", "Ok", {
-        duration: 5000,
-      });
-  });
-
   form = this.formBuilder.group({
     name: new FormControl<string | null>(null, [Validators.required]),
     category: new FormControl<number | null>(null, [Validators.required]),
