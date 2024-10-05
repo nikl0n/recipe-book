@@ -1,14 +1,20 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+
+import { MatSnackBar } from "@angular/material/snack-bar";
+
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
 
 import { RecipeApi } from "../../api/recipe.api";
 import { RecipeActions } from "./recipe.action";
 
 @Injectable()
 export class RecipeEffect {
+  router = inject(Router);
+  snackBar = inject(MatSnackBar);
   actions$ = inject(Actions);
   recipeApi = inject(RecipeApi);
 
@@ -42,6 +48,11 @@ export class RecipeEffect {
       switchMap(({ recipe, token }) =>
         this.recipeApi.create(recipe, token).pipe(
           map((recipe) => RecipeActions.createSuccess({ recipe })),
+          tap(({ recipe }) => {
+            this.router.navigateByUrl(`recipes/${recipe.id}`);
+
+            this.snackBar.open("Rezept wurde erfolgreich erstellt", undefined, { duration: 5000 });
+          }),
           catchError((error: HttpErrorResponse) => of(RecipeActions.createFailure({ error })))
         )
       )

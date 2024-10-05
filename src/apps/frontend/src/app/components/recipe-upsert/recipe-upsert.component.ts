@@ -145,8 +145,6 @@ export class RecipeUpsertComponent {
   snackbarEffect = effect(() => {
     if (this.recipeStatusAction() !== "CREATE") return;
 
-    if (this.recipeStatus() === "SUCCESS")
-      this.snackBar.open("Rezept wurde erfolgreich erstellt", undefined, { duration: 5000 });
     if (this.recipeStatus() === "ERROR")
       this.snackBar.open("Beim erstellen des Rezeptes ist ein Fehler aufgetreten", undefined, {
         duration: 5000,
