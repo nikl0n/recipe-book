@@ -27,13 +27,13 @@ export class LoginPage {
 
   loginEffect = effect(() => {
     if (this.userStatus() === "SUCCESS") {
-      this.snackBar.open("Erfolgreich angemeldet", undefined, { duration: 5000 });
+      this.snackBar.open("Erfolgreich angemeldet", "Ok", { duration: 5000 });
 
       this.router.navigateByUrl("recipes");
     }
 
     if (this.userStatus() === "ERROR") {
-      this.snackBar.open("Beim anmelden ist ein Fehler aufgetreten", undefined, {
+      this.snackBar.open("Beim anmelden ist ein Fehler aufgetreten", "Ok", {
         duration: 5000,
       });
     }

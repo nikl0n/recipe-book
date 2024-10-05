@@ -146,7 +146,7 @@ export class RecipeUpsertComponent {
     if (this.recipeStatusAction() !== "CREATE") return;
 
     if (this.recipeStatus() === "ERROR")
-      this.snackBar.open("Beim erstellen des Rezeptes ist ein Fehler aufgetreten", undefined, {
+      this.snackBar.open("Beim erstellen des Rezeptes ist ein Fehler aufgetreten", "Ok", {
         duration: 5000,
       });
   });

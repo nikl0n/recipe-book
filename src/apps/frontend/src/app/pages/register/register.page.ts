@@ -27,13 +27,13 @@ export class RegisterPage {
 
   registerEffect = effect(() => {
     if (this.userStatus() === "SUCCESS") {
-      this.snackBar.open("Erfolgreich registriert", undefined, { duration: 5000 });
+      this.snackBar.open("Erfolgreich registriert", "Ok", { duration: 5000 });
 
       this.router.navigateByUrl("recipes");
     }
 
     if (this.userStatus() === "ERROR") {
-      this.snackBar.open("Beim registrieren ist ein Fehler aufgetreten", undefined, {
+      this.snackBar.open("Beim registrieren ist ein Fehler aufgetreten", "Ok", {
         duration: 5000,
       });
     }

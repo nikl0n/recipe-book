@@ -51,7 +51,7 @@ export class RecipeEffect {
           tap(({ recipe }) => {
             this.router.navigateByUrl(`recipes/${recipe.id}`);
 
-            this.snackBar.open("Rezept wurde erfolgreich erstellt", undefined, { duration: 5000 });
+            this.snackBar.open("Rezept wurde erfolgreich erstellt", "Ok", { duration: 5000 });
           }),
           catchError((error: HttpErrorResponse) => of(RecipeActions.createFailure({ error })))
         )
