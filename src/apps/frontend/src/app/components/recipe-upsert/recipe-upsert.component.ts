@@ -105,7 +105,7 @@ export class RecipeUpsertComponent {
     this.action() === "create" ? "Rezept erstellen" : "Rezept bearbeiten"
   );
 
-  private _initEffect = effect(() => {
+  _initEffect = effect(() => {
     const recipe = this.recipe();
 
     if (!recipe || this.action() === "create") {
@@ -117,9 +117,7 @@ export class RecipeUpsertComponent {
 
     this.form.controls.name.patchValue(recipe.name);
     this.form.controls.category.patchValue(recipe.categoryId);
-    this.form.controls.image.patchValue(
-      `${environment.api.baseUrl}/api/v1/recipes/${recipe.id}/image`
-    );
+    this.form.controls.image.patchValue(this.getImageUrl());
 
     if (this.action() === "edit") {
       for (const ingredient of this.ingredientsByRecipe()) {
@@ -220,7 +218,7 @@ export class RecipeUpsertComponent {
         name,
         categoryId,
         image: {
-          base64: image,
+          base64: image?.includes("base64") ? image : null,
         },
         ingredients,
         steps,
@@ -235,7 +233,7 @@ export class RecipeUpsertComponent {
         name,
         categoryId,
         image: {
-          base64: image,
+          base64: image?.includes("base64") ? image : null,
         },
         ingredients,
         steps,
