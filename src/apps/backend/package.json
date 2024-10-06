@@ -1,6 +1,6 @@
 {
   "name": "@monorepo/app-backend",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "scripts": {
     "build": "nest build",
     "prod": "node dist/src/main",
