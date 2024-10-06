@@ -152,7 +152,7 @@ export class RecipeUpsertComponent {
 
   addIngredient(ingredient?: ReadIngredient) {
     const ingredientForm = this.formBuilder.group({
-      amount: new FormControl<number | null>(ingredient?.amount ?? null),
+      amount: new FormControl<number | null>(ingredient?.amount ?? null, [Validators.min(0.1)]),
       unitId: new FormControl<number | null>(ingredient?.unitId ?? null),
       name: new FormControl<string | null>(ingredient?.name ?? null),
     });
