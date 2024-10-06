@@ -140,7 +140,7 @@ export class RecipeService {
           recipeId: recipe.id,
         },
       });
-      if (recipe.image) {
+      if (recipe.image.base64) {
         const { mimeType, content } = this.imageService.getBufferMimeTypeFromBase64String(
           recipe.image.base64
         );

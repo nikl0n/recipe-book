@@ -135,6 +135,8 @@ export class RecipeController {
 
     const image = await this.imageService.findFirstByRecipeId(recipeId);
 
+    if (!image) throw new NotFoundException(`no image found with recipe id ${recipe.id}`);
+
     res.setHeader("Content-Type", image.mimeType);
 
     res.send(image.content);
