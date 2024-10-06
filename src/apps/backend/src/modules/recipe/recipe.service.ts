@@ -123,29 +123,18 @@ export class RecipeService {
         },
       });
 
-      await tx.image.deleteMany({
-        where: {
-          recipeId: recipe.id,
-        },
-      });
-
-      await tx.ingredient.deleteMany({
-        where: {
-          recipeId: recipe.id,
-        },
-      });
-
-      await tx.step.deleteMany({
-        where: {
-          recipeId: recipe.id,
-        },
-      });
       if (recipe.image.base64) {
         const { mimeType, content } = this.imageService.getBufferMimeTypeFromBase64String(
           recipe.image.base64
         );
 
         if (mimeType && content) {
+          await tx.image.deleteMany({
+            where: {
+              recipeId: recipe.id,
+            },
+          });
+
           await tx.image.create({
             data: {
               content,
@@ -158,6 +147,12 @@ export class RecipeService {
       }
 
       if (recipe.ingredients.length > 0) {
+        await tx.ingredient.deleteMany({
+          where: {
+            recipeId: recipe.id,
+          },
+        });
+
         await tx.ingredient.createMany({
           data: recipe.ingredients.map((ingredient) => ({
             recipeId: recipe.id,
@@ -170,6 +165,12 @@ export class RecipeService {
       }
 
       if (recipe.steps.length > 0) {
+        await tx.step.deleteMany({
+          where: {
+            recipeId: recipe.id,
+          },
+        });
+
         await tx.step.createMany({
           data: recipe.steps.map((step) => ({
             recipeId: recipe.id,
