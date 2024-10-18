@@ -1,6 +1,6 @@
 {
   "name": "@repo/backend",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "scripts": {
     "build": "nest build",
     "prod": "node dist/src/main",
