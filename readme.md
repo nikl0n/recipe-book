@@ -55,7 +55,6 @@ pnpm dev
   - [x] recipe component
   - [x] filter recipes
   - [ ] search recipes
-  - [ ] print recipe action to save as pdf
   - [ ] pagination
 - [ ] recipe-detail page (WIP)
   - [x] ingredients
@@ -66,19 +65,19 @@ pnpm dev
 - [x] recipe-edit page
 - [x] show back button
 - [x] show login/register and logout buttons
+- [x] show recipe username
 - [ ] add new angular material dark theme
 - [ ] recipe duration
 - [ ] recipe nutritional values
-- [ ] show recipe username
 
 ### Backend
 
 - [x] rights to create, update and delete a recipe
   - [ ] include token with jwt
+- [x] user change primary key id to username -> name
 - [ ] recipe duration
 - [ ] recipe nutritional values
-- [ ] user change primary key id to username -> name
 
 ### Both
 
-- [ ] packages/types
+- [x] packages/types
