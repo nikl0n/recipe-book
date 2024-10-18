@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo/app-backend",
+  "name": "@repo/backend",
   "version": "0.10.3",
   "scripts": {
     "build": "nest build",
