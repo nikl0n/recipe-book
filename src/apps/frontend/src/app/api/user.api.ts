@@ -1,10 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { environment } from "../../environment/environment";
+import { CreateUser, ReadUser } from "@repo/types";
 
-export type ReadUser = { name: string; token: string };
-export type CreateUser = Omit<ReadUser, "token"> & { password: string };
+import { environment } from "../../environment/environment";
 
 @Injectable({ providedIn: "root" })
 export class UserApi {

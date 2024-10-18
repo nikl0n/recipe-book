@@ -1,8 +1,9 @@
 import { Component, inject } from "@angular/core";
 
+import { CreateUser } from "@repo/types";
+
 import { Store } from "@ngrx/store";
 
-import { CreateUser } from "../../api/user.api";
 import { AuthComponent } from "../../components/auth/auth.component";
 import { BackButtonComponent } from "../../components/back-button/back-button.component";
 import { UserActions } from "../../states/user/user.action";

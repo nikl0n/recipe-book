@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { CreateUser, ReadUser } from "../../api/user.api";
+import { CreateUser, ReadUser } from "@repo/types";
+
+import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
 export const UserActions = createActionGroup({
   source: "User",

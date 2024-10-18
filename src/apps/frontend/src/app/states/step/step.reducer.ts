@@ -1,6 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { ReadStep } from "../../api/step.api";
+import { ReadStep } from "@repo/types";
+
 import { StepActions } from "./step.action";
 
 interface StepState {

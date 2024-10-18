@@ -1,6 +1,7 @@
+import { ReadUser } from "@repo/types";
+
 import { createFeature, createReducer, on } from "@ngrx/store";
 
-import { ReadUser } from "../../api/user.api";
 import { UserActions } from "./user.action";
 
 interface UserState {

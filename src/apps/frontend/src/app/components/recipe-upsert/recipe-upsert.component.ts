@@ -18,6 +18,8 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
+import { CreateIngredient, CreateStep, ReadIngredient, ReadStep } from "@repo/types";
+
 import { Store } from "@ngrx/store";
 
 import { MatButtonModule } from "@angular/material/button";
@@ -29,9 +31,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { environment } from "../../../environment/environment";
-import { CreateIngredient, ReadIngredient } from "../../api/ingredients.api";
 import { CreateRecipeExtended, UpdateRecipeExtended } from "../../api/recipe.api";
-import { CreateStep, ReadStep } from "../../api/step.api";
 import { CategorySelectCategories } from "../../states/category/category.reducer";
 import { IngredientSelectIngredientsByRecipeId } from "../../states/ingredient/ingredient.reducer";
 import {

@@ -1,12 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { environment } from "../../environment/environment";
+import { ReadUnit } from "@repo/types";
 
-export type Unit = {
-  id: number;
-  name: string;
-};
+import { environment } from "../../environment/environment";
 
 @Injectable({ providedIn: "root" })
 export class UnitApi {
@@ -15,6 +12,6 @@ export class UnitApi {
   private readonly baseUrl = `${environment.api.baseUrl}/api/v1/units`;
 
   fetchMany() {
-    return this.http.get<Unit[]>(this.baseUrl);
+    return this.http.get<ReadUnit[]>(this.baseUrl);
   }
 }

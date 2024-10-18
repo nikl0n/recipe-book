@@ -2,6 +2,8 @@ import { CommonModule } from "@angular/common";
 import { Component, computed, effect, inject, signal } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 
+import { ReadCategory, ReadRecipe } from "@repo/types";
+
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { MatButtonModule } from "@angular/material/button";
 import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
@@ -14,8 +16,6 @@ import { Store } from "@ngrx/store";
 import { take } from "rxjs";
 
 import { environment } from "../../../environment/environment";
-import { Category } from "../../api/category.api";
-import { ReadRecipe } from "../../api/recipe.api";
 import { DialogAreYouSureComponent } from "../../components/dialog-are-you-sure/dialog-are-you-sure.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { RecipeComponent } from "../../components/recipe/recipe.component";
@@ -30,7 +30,7 @@ import { UserActions } from "../../states/user/user.action";
 import { UserSelectUser } from "../../states/user/user.reducer";
 
 export type ExtendedRecipe = ReadRecipe & {
-  category: Category | undefined;
+  category: ReadCategory | undefined;
   image: string;
 };
 
@@ -64,7 +64,7 @@ export class RecipeListPage {
 
   categories = this.store.selectSignal(CategorySelectCategories);
 
-  activeCategoryIds = signal<Category["id"][]>([]);
+  activeCategoryIds = signal<ReadCategory["id"][]>([]);
 
   extendedRecipe = computed(() => {
     let recipes: ExtendedRecipe[] = this.recipes()
@@ -97,7 +97,7 @@ export class RecipeListPage {
   );
 
   onClickChipCategory(event: MatChipListboxChange) {
-    const categoryIds = event.value as Array<Category["id"]>;
+    const categoryIds = event.value as Array<ReadCategory["id"]>;
 
     this.activeCategoryIds.set(categoryIds);
   }

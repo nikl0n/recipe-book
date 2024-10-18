@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { CreateRecipeExtended, ReadRecipe, UpdateRecipeExtended } from "../../api/recipe.api";
+import { ReadRecipe } from "@repo/types";
+
+import { CreateRecipeExtended, UpdateRecipeExtended } from "../../api/recipe.api";
 
 export const RecipeActions = createActionGroup({
   source: "Recipe",

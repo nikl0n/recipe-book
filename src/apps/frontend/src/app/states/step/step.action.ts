@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { createActionGroup, props } from "@ngrx/store";
 
-import { ReadStep } from "../../api/step.api";
+import { ReadStep } from "@repo/types";
+
+import { createActionGroup, props } from "@ngrx/store";
 
 export const StepActions = createActionGroup({
   source: "Step",

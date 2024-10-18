@@ -1,12 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { environment } from "../../environment/environment";
+import { ReadCategory } from "@repo/types";
 
-export type Category = {
-  id: number;
-  name: string;
-};
+import { environment } from "../../environment/environment";
 
 @Injectable({ providedIn: "root" })
 export class CategoryApi {
@@ -15,6 +12,6 @@ export class CategoryApi {
   private readonly baseUrl = `${environment.api.baseUrl}/api/v1/categories`;
 
   fetchMany() {
-    return this.http.get<Category[]>(this.baseUrl);
+    return this.http.get<ReadCategory[]>(this.baseUrl);
   }
 }

@@ -2,6 +2,8 @@ import { Component, computed, inject, input, output } from "@angular/core";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
+import { CreateUser } from "@repo/types";
+
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -9,7 +11,6 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { Store } from "@ngrx/store";
 
-import { CreateUser } from "../../api/user.api";
 import { UserSelectStatus } from "../../states/user/user.reducer";
 
 @Component({

@@ -1,9 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, inject, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
+
+import { ReadUser } from "@repo/types";
+
 import { Store } from "@ngrx/store";
 
-import { ReadUser } from "./api/user.api";
 import { LoadingComponent } from "./components/loading/loading.component";
 import { GlobalCategoryActions } from "./states/category/category.action";
 import { CategorySelectStatus } from "./states/category/category.reducer";

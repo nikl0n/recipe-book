@@ -1,10 +1,11 @@
+import { ReadUnit } from "@repo/types";
+
 import { createFeature, createReducer, on } from "@ngrx/store";
 
-import { Unit } from "../../api/unit.api";
 import { GlobalUnitActions } from "./unit.action";
 
 interface UnitState {
-  units: Unit[];
+  units: ReadUnit[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
 }

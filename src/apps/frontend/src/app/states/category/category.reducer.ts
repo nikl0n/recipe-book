@@ -1,10 +1,11 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { Category } from "../../api/category.api";
+import { ReadCategory } from "@repo/types";
+
 import { GlobalCategoryActions } from "./category.action";
 
 interface CategoryState {
-  categories: Category[];
+  categories: ReadCategory[];
   status: "IDLE" | "LOADING" | "SUCCESS" | "ERROR";
   statusAction: "CREATE" | "READ" | "UPDATE" | "DELETE";
 }

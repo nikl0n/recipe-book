@@ -1,20 +1,28 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { environment } from "../../environment/environment";
-import { CreateImage, ReadImage } from "./image.api";
-import { CreateIngredient, ReadIngredient } from "./ingredients.api";
-import { CreateStep, ReadStep } from "./step.api";
+import {
+  CreateImage,
+  CreateIngredient,
+  CreateRecipe,
+  CreateStep,
+  ReadImage,
+  ReadIngredient,
+  ReadRecipe,
+  ReadStep,
+} from "@repo/types";
 
-export type ReadRecipe = {
-  id: number;
-  userName: string;
-  categoryId: number;
-  name: string;
-  timestamp: Date;
-};
-export type CreateRecipe = Omit<ReadRecipe, "id" | "userName" | "timestamp">;
-export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
+import { environment } from "../../environment/environment";
+
+// export type ReadRecipe = {
+//   id: number;
+//   userName: string;
+//   categoryId: number;
+//   name: string;
+//   timestamp: Date;
+// };
+// export type CreateRecipe = Omit<ReadRecipe, "id" | "userName" | "timestamp">;
+// export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 export type CreateRecipeExtended = CreateRecipe & {
   image: CreateImage;

@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { Category } from "../../api/category.api";
+import { ReadCategory } from "@repo/types";
 
 export const GlobalCategoryActions = createActionGroup({
   source: "Category",
   events: {
     fetchAll: emptyProps(),
-    fetchAllSuccess: props<{ categories: Category[] }>(),
+    fetchAllSuccess: props<{ categories: ReadCategory[] }>(),
     fetchAllFailure: props<{ error: HttpErrorResponse }>(),
   },
 });

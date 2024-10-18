@@ -1,6 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { ReadRecipe } from "../../api/recipe.api";
+import { ReadRecipe } from "@repo/types";
+
 import { RecipeActions } from "./recipe.action";
 
 interface RecipeState {

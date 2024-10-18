@@ -1,6 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { ReadIngredient } from "../../api/ingredients.api";
+import { ReadIngredient } from "@repo/types";
+
 import { IngredientActions } from "./ingredient.action";
 
 interface IngredientState {

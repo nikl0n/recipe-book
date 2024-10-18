@@ -1,13 +1,14 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { Unit } from "../../api/unit.api";
+import { ReadUnit } from "@repo/types";
+
+import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
 export const GlobalUnitActions = createActionGroup({
   source: "Unit",
   events: {
     fetchAll: emptyProps(),
-    fetchAllSuccess: props<{ units: Unit[] }>(),
+    fetchAllSuccess: props<{ units: ReadUnit[] }>(),
     fetchAllFailure: props<{ error: HttpErrorResponse }>(),
   },
 });

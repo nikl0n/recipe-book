@@ -1,10 +1,11 @@
 import { Component, input, output } from "@angular/core";
 
+import { ReadUser } from "@repo/types";
+
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 
-import { ReadUser } from "../../api/user.api";
 import { ExtendedRecipe } from "../../pages/recipe-list/recipe-list.page";
 
 @Component({
