@@ -16,27 +16,15 @@ import {
 } from "@nestjs/common";
 import { SkipThrottle } from "@nestjs/throttler";
 
+import { CreateImage, CreateIngredient, CreateRecipe, CreateStep, ReadUser } from "@repo/types";
+
 import { Request, Response } from "express";
 
 import { TokenAuthGuard } from "src/guards/token.guard";
-import { CreateImage } from "../image/image.controller";
 import { ImageService } from "../image/image.service";
-import { CreateIngredient } from "../ingredient/ingredient.controller";
 import { IngredientService } from "../ingredient/ingredient.service";
-import { CreateStep } from "../step/step.controller";
 import { StepService } from "../step/step.service";
-import { ReadUser } from "../user/user.controller";
 import { RecipeService } from "./recipe.service";
-
-export type ReadRecipe = {
-  id: number;
-  userName: string;
-  categoryId: number;
-  name: string;
-  timestamp: Date;
-};
-export type CreateRecipe = Omit<ReadRecipe, "id" | "userName" | "timestamp">;
-export type UpdateRecipe = Omit<ReadRecipe, "timestamp">;
 
 @Controller("api/v1/recipes")
 export class RecipeController {

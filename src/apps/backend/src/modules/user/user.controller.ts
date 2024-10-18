@@ -1,11 +1,10 @@
 import { Body, ConflictException, Controller, Post, UnauthorizedException } from "@nestjs/common";
 
+import { CreateUser, ReadUser } from "@repo/types";
+
 import { randomBytes } from "node:crypto";
 
 import { UserService } from "./user.service";
-
-export type ReadUser = { name: string; token: string };
-type CreateUser = Omit<ReadUser, "token"> & { password: string };
 
 @Controller("api/v1/users")
 export class UserController {

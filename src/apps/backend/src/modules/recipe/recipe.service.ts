@@ -1,12 +1,10 @@
 import { Injectable } from "@nestjs/common";
 
+import { CreateImage, CreateIngredient, CreateRecipe, CreateStep } from "@repo/types";
+
 import { PrismaClient } from "@prisma/client";
 
-import { CreateImage } from "../image/image.controller";
 import { ImageService } from "../image/image.service";
-import { CreateIngredient } from "../ingredient/ingredient.controller";
-import { CreateStep } from "../step/step.controller";
-import { CreateRecipe } from "./recipe.controller";
 
 @Injectable()
 export class RecipeService {
