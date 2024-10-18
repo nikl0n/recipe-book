@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo/app-frontend",
+  "name": "@repo/frontend",
   "version": "0.10.3",
   "scripts": {
     "dev": "ng serve",
