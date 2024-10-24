@@ -1,6 +1,6 @@
 import { Body, ConflictException, Controller, Post, UnauthorizedException } from "@nestjs/common";
 
-import { CreateUser, ReadUser } from "@repo/types";
+import { CreateUser, ReadUser } from "@monorepo/types";
 
 import { randomBytes } from "node:crypto";
 

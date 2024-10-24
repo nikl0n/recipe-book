@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { CreateImage, CreateIngredient, CreateRecipe, CreateStep } from "@repo/types";
+import { CreateImage, CreateIngredient, CreateRecipe, CreateStep } from "@monorepo/types";
 
 import { PrismaClient } from "@prisma/client";
 
