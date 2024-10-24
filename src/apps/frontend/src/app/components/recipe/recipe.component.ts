@@ -1,6 +1,6 @@
 import { Component, input, output } from "@angular/core";
 
-import { ReadUser } from "@repo/types";
+import { ReadUser } from "@monorepo/types";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";

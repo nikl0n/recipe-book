@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { ReadRecipe } from "@repo/types";
+import { ReadRecipe } from "@monorepo/types";
 
 import { CreateRecipeExtended, UpdateRecipeExtended } from "../../api/recipe.api";
 

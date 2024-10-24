@@ -18,7 +18,7 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
-import { CreateIngredient, CreateStep, ReadIngredient, ReadStep } from "@repo/types";
+import { CreateIngredient, CreateStep, ReadIngredient, ReadStep } from "@monorepo/types";
 
 import { Store } from "@ngrx/store";
 

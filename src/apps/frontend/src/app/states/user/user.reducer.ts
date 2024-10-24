@@ -1,4 +1,4 @@
-import { ReadUser } from "@repo/types";
+import { ReadUser } from "@monorepo/types";
 
 import { createFeature, createReducer, on } from "@ngrx/store";
 

@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-import { ReadCategory } from "@repo/types";
+import { ReadCategory } from "@monorepo/types";
 
 export const GlobalCategoryActions = createActionGroup({
   source: "Category",

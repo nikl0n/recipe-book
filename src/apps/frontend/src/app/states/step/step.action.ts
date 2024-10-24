@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 
-import { ReadStep } from "@repo/types";
+import { ReadStep } from "@monorepo/types";
 
 import { createActionGroup, props } from "@ngrx/store";
 

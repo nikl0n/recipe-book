@@ -1,4 +1,4 @@
-import { ReadUnit } from "@repo/types";
+import { ReadUnit } from "@monorepo/types";
 
 import { createFeature, createReducer, on } from "@ngrx/store";
 

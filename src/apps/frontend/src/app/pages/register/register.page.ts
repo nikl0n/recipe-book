@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 
-import { CreateUser } from "@repo/types";
+import { CreateUser } from "@monorepo/types";
 
 import { Store } from "@ngrx/store";
 

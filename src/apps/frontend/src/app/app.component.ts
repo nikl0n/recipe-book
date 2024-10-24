@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, computed, inject, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 
-import { ReadUser } from "@repo/types";
+import { ReadUser } from "@monorepo/types";
 
 import { Store } from "@ngrx/store";
 

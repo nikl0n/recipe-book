@@ -1,6 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { ReadRecipe } from "@repo/types";
+import { ReadRecipe } from "@monorepo/types";
 
 import { RecipeActions } from "./recipe.action";
 

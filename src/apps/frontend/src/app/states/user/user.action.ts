@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 
-import { CreateUser, ReadUser } from "@repo/types";
+import { CreateUser, ReadUser } from "@monorepo/types";
 
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 

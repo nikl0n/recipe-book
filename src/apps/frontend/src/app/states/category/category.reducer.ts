@@ -1,6 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { ReadCategory } from "@repo/types";
+import { ReadCategory } from "@monorepo/types";
 
 import { GlobalCategoryActions } from "./category.action";
 

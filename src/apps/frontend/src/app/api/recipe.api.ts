@@ -10,7 +10,7 @@ import {
   ReadIngredient,
   ReadRecipe,
   ReadStep,
-} from "@repo/types";
+} from "@monorepo/types";
 
 import { environment } from "../../environment/environment";
 
