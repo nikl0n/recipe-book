@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output } from "@angular/core";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { CreateUser } from "@monorepo/types";
+import { CreateUser } from "@packages/types";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";

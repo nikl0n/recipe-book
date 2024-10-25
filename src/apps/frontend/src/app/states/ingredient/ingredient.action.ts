@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 
-import { ReadIngredient } from "@monorepo/types";
+import { ReadIngredient } from "@packages/types";
 
 import { createActionGroup, props } from "@ngrx/store";
 

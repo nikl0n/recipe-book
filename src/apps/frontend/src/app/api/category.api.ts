@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { ReadCategory } from "@monorepo/types";
+import { ReadCategory } from "@packages/types";
 
 import { environment } from "../../environment/environment";
 

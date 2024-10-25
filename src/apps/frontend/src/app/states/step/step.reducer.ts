@@ -1,6 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 
-import { ReadStep } from "@monorepo/types";
+import { ReadStep } from "@packages/types";
 
 import { StepActions } from "./step.action";
 

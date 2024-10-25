@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { CreateUser, ReadUser } from "@monorepo/types";
+import { CreateUser, ReadUser } from "@packages/types";
 
 import { environment } from "../../environment/environment";
 
