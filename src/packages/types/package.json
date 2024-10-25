@@ -1,11 +1,10 @@
 {
-  "name": "@monorepo/types",
-  "version": "0.0.0",
+  "name": "@packages/types",
   "private": true,
   "main": "./src/_index.ts",
   "exports": "./src/_index.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "typescript": "^5.6.3"
