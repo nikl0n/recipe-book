@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo/backend",
+  "name": "@apps/backend",
   "version": "0.10.5",
   "scripts": {
     "build": "nest build",
@@ -12,13 +12,14 @@
     "prisma:seed": "dotenv -e env/.env -c development -- ts-node prisma/seed.ts"
   },
   "dependencies": {
-    "@monorepo/types": "workspace:*",
+    "@packages/types": "workspace:*",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/throttler": "^6.2.1",
     "@prisma/client": "^5.18.0",
+    "dotenv-cli": "^7.4.2",
     "bcrypt": "^5.1.1",
     "prisma": "^5.18.0",
     "reflect-metadata": "^0.1.13",
@@ -35,7 +36,6 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "dotenv-cli": "^7.4.2",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
