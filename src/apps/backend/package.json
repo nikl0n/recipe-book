@@ -1,6 +1,6 @@
 {
   "name": "@apps/backend",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "scripts": {
     "build": "nest build",
     "prod": "dotenv -e env/.env -c production -- node dist/src/main",
