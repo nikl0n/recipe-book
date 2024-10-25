@@ -1,10 +1,10 @@
 {
   "name": "recipe-book",
-  "description": "",
+  "description": "A comprehensive recipe book application built with Angular, NestJS, and MySQL. It offers a user-friendly interface for managing recipes, complete with features like user authentication, recipe filtering, and category-based organization, all packaged with Docker for streamlined development and deployment.",
   "scripts": {
     "build:apps": "pnpm --filter \"@apps/*\" run build",
     "build:packages": "pnpm --filter \"@packages/*\" run build"
   },
   "author": "nikl0n",
-  "license": "ISC"
+  "license": "MIT"
 }
