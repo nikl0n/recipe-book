@@ -1,14 +1,9 @@
-.editorconfig
+.git
 .gitignore
-.eslintrc.js
-Dockerfile
-README.md
 
-**/.git
-**/.vscode
 **/node_modules
-**/dist
-**/build
+src/apps/*/dist
+src/apps/*/build
+src/packages/*/dist
 
-**/.angular
-
+src/apps/frontend/.angular
