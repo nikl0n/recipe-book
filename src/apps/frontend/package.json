@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo/frontend",
+  "name": "@apps/frontend",
   "version": "0.10.5",
   "scripts": {
     "dev": "ng serve",
@@ -7,7 +7,7 @@
   },
   "private": true,
   "dependencies": {
-    "@monorepo/types": "workspace:*",
+    "@packages/types": "workspace:*",
     "@angular/animations": "^18.1.0",
     "@angular/cdk": "18.1.0",
     "@angular/common": "^18.1.0",
