@@ -1,8 +1,10 @@
 {
   "name": "recipe-book",
-  "version": "1.0.0",
   "description": "",
-  "keywords": [],
+  "scripts": {
+    "build:apps": "pnpm --filter \"@apps/*\" run build",
+    "build:packages": "pnpm --filter \"@packages/*\" run build"
+  },
   "author": "nikl0n",
   "license": "ISC"
 }
