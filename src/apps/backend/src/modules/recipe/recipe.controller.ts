@@ -16,7 +16,7 @@ import {
 } from "@nestjs/common";
 import { SkipThrottle } from "@nestjs/throttler";
 
-import { CreateImage, CreateIngredient, CreateRecipe, CreateStep, ReadUser } from "@monorepo/types";
+import { CreateImage, CreateIngredient, CreateRecipe, CreateStep, ReadUser } from "@packages/types";
 
 import { Request, Response } from "express";
 
