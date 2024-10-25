@@ -18,6 +18,7 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: mysql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@database:3306/${DATABASE_DATABASE}
+      BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
 
   database:
     image: mysql:8
