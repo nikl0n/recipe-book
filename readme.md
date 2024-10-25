@@ -73,7 +73,6 @@ pnpm dev
 ### Backend
 
 - [x] rights to create, update and delete a recipe
-  - [ ] include token with jwt
 - [x] user change primary key id to username -> name
 - [ ] recipe duration
 - [ ] recipe nutritional values
